@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="greenblue1">#00C3A0</color>
+    <color name="greenblue2">#90EAC4</color>
+    <color name="red1">#d50000</color>
+    <color name="red2">#ff5131</color>
+    <color name="purple1">#9c27b0</color>
+    <color name="purple2">#d05ce3</color>
+    <color name="orange1">#ff6f00</color>
+    <color name="orange2">#ffa040</color>
+    <color name="blue1">#005ecb</color>
+    <color name="blue2">#448aff</color>
+    <color name="color_blind2">#cccccc</color>
+    <color name="color_dark2">#787878</color>
+
+    <color name="green1">#009624</color>
+    <color name="green2">#00C853</color>
+    <color name="dark">#111111</color>
+    <color name="password">#222222</color>
+    <color name="red3">#9b0000</color>
+    <color name="greenblue3">#009172</color>
+    <color name="blue3">#003699</color>
+    <color name="orange3">#c43e00</color>
+    <color name="purple3">#6a0080</color>
+    <color name="green3">#006700</color>
+    <color name="color_blind3">#9b9b9b
+    </color>
+    <color name="color_dark3">#989b9b </color>
+
+    <color name="detail_pink">#F52C82</color>
+    <color name="detail_blue">#58B2FE</color>
+
+    <color name="title">#3F4A58</color>
+    <color name="subtitle_dark">#757E90</color>
+    <color name="subtitle_light">#A2AFC0</color>
+
+    <color name="divider">#DEE4EB</color>
+    <color name="divider_darker">#CAD0D7</color>
+
+    <color name="unselected_selectable_text_bg">#EAEAEB</color>
+
+    <color name="red_validation">#FF0033</color>
+    <color name="light_bg_contrast">#F8F8F8</color>
+
+    <color name="feature_outline_ambient_shadow">#00500531</color>
+    <color name="feature_outline_spot_shadow">#5E530535</color>
+</resources>
