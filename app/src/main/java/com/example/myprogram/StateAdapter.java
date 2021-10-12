@@ -33,6 +33,8 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
     int colorFav = R.drawable.favorite;
         int colorTitle = R.drawable.elipse2;
         int colorDec = R.drawable.elipse3;
+         int colorBack = R.drawable.elipse3;
+
 
         int colorTitle1 = R.color.greenblue1;
         int colorDec1 = R.color.greenblue2;
@@ -43,7 +45,9 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
     private static int MIN_DISTANSE = 150;
     private GestureDetector gestureDetector;
 
-        public OnClickToMore getOnClickToMore() {
+
+
+    public OnClickToMore getOnClickToMore() {
             return onClickToMore;
         }
 
@@ -51,7 +55,7 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
             this.onClickToMore = onClickToMore;
         }
 
-        StateAdapter(Context context, List<Notatka> notatkas, int colorFav, int colorTitle, int colorDec, int colorTitle1, int colorDec1, int colorBottom) {
+        StateAdapter(Context context, List<Notatka> notatkas, int colorFav, int colorTitle, int colorDec, int colorTitle1, int colorDec1, int colorBottom, int colorBack) {
             this.context = context;
             this.notatkas = notatkas;
             this.inflater = LayoutInflater.from(context);
@@ -62,6 +66,7 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
             this.colorTitle1 = colorTitle1;
             this.colorDec1 = colorDec1;
             this.colorBottom = colorBottom;
+            this.colorBack = colorBack;
         }
 
         @NonNull

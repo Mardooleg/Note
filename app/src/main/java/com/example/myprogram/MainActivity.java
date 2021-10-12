@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
@@ -104,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int colorTitle1 = R.color.greenblue1;
     int colorDec1 = R.color.greenblue2;
     int colorBottom = R.color.greenblue3;
+    int colorBack = R.color.white;
+
+//    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//    Window window = getWindow();
+//        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.setStatusBarColor(getResources().getColor(R.color.white));
 
     private RecyclerView recyclerViewNotes;
     private RecyclerView recyclerViewFavorite;
@@ -138,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int color4 = prefs.getInt("COLOR4",  R.color.greenblue2); //0 is the default value.
         int color5 = prefs.getInt("COLOR5",R.color.greenblue1); //0 is the default value.
         int color6 = prefs.getInt("COLOR6", R.color.greenblue3); //0 is the default value.
-
+        int color7 = prefs.getInt("COLOR7", R.color.white); //0 is the default value.
 
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -153,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll("");
         Collections.reverse(notatkas);
-        StateAdapter stateAdapter = new StateAdapter(this, notatkas, color1, color2, color3, color4,  color5, color6);
+        StateAdapter stateAdapter = new StateAdapter(this, notatkas, color1, color2, color3, color4,  color5, color6, color7);
         stateAdapter.setOnClickToMore(this);
 
 
@@ -242,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (recyclerViewNotes.getVisibility() == VISIBLE) {
                     List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
                     Collections.reverse(notatkas);
-                    StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
+                    StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack);
                     stateAdapter.setOnClickToMore(MainActivity.this::onClick);
                     recyclerViewNotes.setAdapter(stateAdapter);
                 } else if (recyclerViewFavorite.getVisibility() == VISIBLE) {
@@ -340,7 +348,7 @@ swipe = 2;
                                 edtext.setVisibility(View.GONE);
                                 List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
                                 Collections.reverse(notatkas);
-                                StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
+                                StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack);
                                 stateAdapter.setOnClickToMore(MainActivity.this::onClick);
                                 recyclerViewNotes.setAdapter(stateAdapter);
                                 recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
@@ -376,17 +384,19 @@ swipe = 2;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 stateDarkMode = isChecked;
                 if (isChecked) {
-                    Window window = getWindow();
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                    window.setStatusBarColor(getResources().getColor(R.color.dark));
-                    background.setBackgroundColor(getResources().getColor(R.color.dark));
-                    litback.setBackgroundColor(getResources().getColor(R.color.dark));
-                    switch1.setTextColor(getResources().getColor(R.color.white));
-                    search.setColorFilter(getResources().getColor(R.color.dark));
-                    searchmove.setColorFilter(getResources().getColor(R.color.dark));
-                    systhem.setTextColor(getResources().getColor(R.color.white));
-                    plus1.setColorFilter(getResources().getColor(R.color.dark));
+//                    Window window = getWindow();
+//                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//                    window.setStatusBarColor(getResources().getColor(R.color.dark));
+//                    background.setBackgroundColor(getResources().getColor(R.color.dark));
+//                    litback.setBackgroundColor(getResources().getColor(R.color.dark));
+//                    switch1.setTextColor(getResources().getColor(R.color.white));
+//                    search.setColorFilter(getResources().getColor(R.color.dark));
+//                    searchmove.setColorFilter(getResources().getColor(R.color.dark));
+//                    systhem.setTextColor(getResources().getColor(R.color.white));
+//                    plus1.setColorFilter(getResources().getColor(R.color.dark));
+
+                    colorStyle(0,0, 0, 0 , 0, 0, R.color.dark);
 
                 } else {
                     Window window = getWindow();
@@ -404,7 +414,7 @@ swipe = 2;
             }
         });
 
-        colorStyle(color1,color2,color3,color4,color5, color6);
+        colorStyle(color1,color2,color3,color4,color5, color6, color7);
 
 
 
@@ -447,36 +457,35 @@ swipe = 2;
 
                 switch ((int) id) {
                     case 0:
-                        colorStyle(R.drawable.favorite_colorblind,R.drawable.elipse2_colorblind,R.drawable.elipse3_colorblind, R.color.white,R.color.color_blind2, R.color.color_blind3);
+                        colorStyle(R.drawable.favorite_colorblind,R.drawable.elipse2_colorblind,R.drawable.elipse3_colorblind, R.color.white,R.color.color_blind2, R.color.color_blind3, R.color.white);
                         break;
                     case 1:
-                        colorStyle(R.drawable.favorite_blue,R.drawable.elipse2_blue,R.drawable.elipse3_blue,R.color.blue2, R.color.blue1, R.color.blue3);
+                        colorStyle(R.drawable.favorite_blue,R.drawable.elipse2_blue,R.drawable.elipse3_blue,R.color.blue2, R.color.blue1, R.color.blue3, R.color.white);
+//                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //                        Window window = getWindow();
 //                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 //                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//                        window.setStatusBarColor(getResources().getColor(R.color.dark));
-//                        background.setBackgroundColor(getResources().getColor(R.color.dark));
-//                        litback.setBackgroundColor(getResources().getColor(R.color.dark));
-//                        switch1.setTextColor(getResources().getColor(R.color.white));
-//                        search.setColorFilter(getResources().getColor(R.color.dark));
-//                        searchmove.setColorFilter(getResources().getColor(R.color.dark));
-//                        systhem.setTextColor(getResources().getColor(R.color.white));
-//                        plus1.setColorFilter(getResources().getColor(R.color.dark));
+//                        window.setStatusBarColor(getResources().getColor(R.color.white));
                         break;
                     case 2:
-                        colorStyle(R.drawable.favorite_green,R.drawable.elipse2_green,R.drawable.elipse3_green,R.color.green2, R.color.green1, R.color.green3);
+                        colorStyle(R.drawable.favorite_green,R.drawable.elipse2_green,R.drawable.elipse3_green,R.color.green2, R.color.green1, R.color.green3, R.color.dark);
+//                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//                        Window window1 = getWindow();
+//                        window1.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//                        window1.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//                        window1.setStatusBarColor(getResources().getColor(R.color.dark));
                         break;
                     case 3:
-                        colorStyle(R.drawable.favorite_greenblue,R.drawable.elipse2_greenblue,R.drawable.elipse3, R.color.greenblue2,R.color.greenblue1, R.color.greenblue3);
+                        colorStyle(R.drawable.favorite_greenblue,R.drawable.elipse2_greenblue,R.drawable.elipse3, R.color.greenblue2,R.color.greenblue1, R.color.greenblue3, R.color.white);
                         break;
                     case 4:
-                        colorStyle(R.drawable.favorite_purple,R.drawable.elipse2_purple,R.drawable.elipse3_purple,R.color.purple2, R.color.purple1, R.color.purple3);
+                        colorStyle(R.drawable.favorite_purple,R.drawable.elipse2_purple,R.drawable.elipse3_purple,R.color.purple2, R.color.purple1, R.color.purple3, R.color.white);
                         break;
                     case 5:
-                        colorStyle(R.drawable.favorite_orange,R.drawable.elipse2_orange,R.drawable.elipse3_orange, R.color.orange2,R.color.orange1, R.color.orange3);// Метод
+                        colorStyle(R.drawable.favorite_orange,R.drawable.elipse2_orange,R.drawable.elipse3_orange, R.color.orange2,R.color.orange1, R.color.orange3, R.color.white);// Метод
                         break;
                     case 6:
-                        colorStyle(R.drawable.favorite_red,R.drawable.elipse2_red,R.drawable.elipse3_red,R.color.red2, R.color.red1, R.color.red3);
+                        colorStyle(R.drawable.favorite_red,R.drawable.elipse2_red,R.drawable.elipse3_red,R.color.red2, R.color.red1, R.color.red3, R.color.white);
                         break;
 
                  }
@@ -518,7 +527,7 @@ swipe = 2;
     }
 
       @SuppressLint("ResourceType")
-      private void colorStyle(int color1, int color2, int color3 , int color4 , int color5, int color6/* int color7 , int color8*/) {
+      private void colorStyle(int color1, int color2, int color3 , int color4 , int color5, int color6, int color7 /*, int color8*/) {
 
 
           colorFav = color1;
@@ -527,7 +536,12 @@ swipe = 2;
           colorTitle1 = color4;//light
           colorDec1 = color5;//dark
           colorBottom = color6;//коли не вибрана вкладка
+          colorBack = color7;
           bottomNavigation.setBackgroundColor(getResources().getColor(colorDec1));
+
+          background.setBackgroundColor(getResources().getColor(colorBack));
+          litback.setBackgroundColor(getResources().getColor(colorBack));
+
           plus.setColorFilter(getResources().getColor(colorDec1));
           elipse.setColorFilter(getResources().getColor(colorDec1));
           elipse4.setColorFilter(getResources().getColor(colorDec1));
@@ -549,6 +563,7 @@ swipe = 2;
           editor.putInt("COLOR4", color4);
           editor.putInt("COLOR5", color5);
           editor.putInt("COLOR6", color6);
+          editor.putInt("COLOR7", color7);
           editor.apply();
       }
 
@@ -656,7 +671,7 @@ swipe = 2;
 
                 List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
                 Collections.reverse(notatkas);
-                StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
+                StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack);
                 stateAdapter.setOnClickToMore(MainActivity.this::onClick);
                 recyclerViewNotes.setAdapter(stateAdapter);
                    break;
@@ -779,7 +794,7 @@ swipe = 2;
                             edtext.setVisibility(View.GONE);
                             List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
                             Collections.reverse(notatkas);
-                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom);
+                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom, colorBack);
                             stateAdapter.setOnClickToMore(MainActivity.this::onClick);
                             recyclerViewNotes.setAdapter(stateAdapter);
                             recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
@@ -916,7 +931,7 @@ switch (position){
         edtext.setVisibility(View.GONE);
         List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
         Collections.reverse(notatkas);
-        StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
+        StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack);
         stateAdapter.setOnClickToMore(MainActivity.this::onClick);
         recyclerViewNotes.setAdapter(stateAdapter);
         recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
