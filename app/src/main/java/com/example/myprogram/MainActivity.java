@@ -396,20 +396,19 @@ swipe = 2;
 //                    systhem.setTextColor(getResources().getColor(R.color.white));
 //                    plus1.setColorFilter(getResources().getColor(R.color.dark));
 
-//                    colorStyle(, R.color.dark);
 
                 } else {
-                    Window window = getWindow();
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                    window.setStatusBarColor(getResources().getColor(R.color.white));
-                    background.setBackgroundColor(getResources().getColor(R.color.white));
-                    litback.setBackgroundColor(getResources().getColor(R.color.white));
-                    switch1.setTextColor(getResources().getColor(R.color.black));
-                    search.setColorFilter(getResources().getColor(R.color.white));
-                    searchmove.setColorFilter(getResources().getColor(R.color.white));
-                    systhem.setTextColor(getResources().getColor(R.color.dark));
-                    plus1.setColorFilter(getResources().getColor(R.color.white));
+//                    Window window = getWindow();
+//                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//                    window.setStatusBarColor(getResources().getColor(R.color.white));
+//                    background.setBackgroundColor(getResources().getColor(R.color.white));
+//                    litback.setBackgroundColor(getResources().getColor(R.color.white));
+//                    switch1.setTextColor(getResources().getColor(R.color.black));
+//                    search.setColorFilter(getResources().getColor(R.color.white));
+//                    searchmove.setColorFilter(getResources().getColor(R.color.white));
+//                    systhem.setTextColor(getResources().getColor(R.color.dark));
+//                    plus1.setColorFilter(getResources().getColor(R.color.white));
                 }
             }
         });
@@ -458,34 +457,136 @@ swipe = 2;
                 switch ((int) id) {
                     case 0:
                         colorStyle(R.drawable.favorite_colorblind,R.drawable.elipse2_colorblind,R.drawable.elipse3_colorblind, R.color.white,R.color.color_blind2, R.color.color_blind3, R.color.white);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        ViewGroup viewGroup = findViewById(android.R.id.content);
+                        builder.setTitle("which system theme do you want yo use?");
+                        AlertDialog alertDialog = builder.
+                                setNegativeButton("White", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_colorblind,R.drawable.elipse2_colorblind,R.drawable.elipse3_colorblind, R.color.white,R.color.color_blind2, R.color.color_blind3, R.color.white);
+                                    }}).
+                                setPositiveButton("Black", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_colorblind,R.drawable.elipse2_colorblind,R.drawable.elipse3_colorblind, R.color.white,R.color.color_blind2, R.color.color_blind3, R.color.dark);
+                                    }}).create();
+                        alertDialog.show();
                         break;
                     case 1:
                         colorStyle(R.drawable.favorite_blue,R.drawable.elipse2_blue,R.drawable.elipse3_blue,R.color.blue2, R.color.blue1, R.color.blue3, R.color.white);
-//                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                        Window window = getWindow();
-//                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//                        window.setStatusBarColor(getResources().getColor(R.color.white));
+
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+                        ViewGroup viewGroup1 = findViewById(android.R.id.content);
+                        builder1.setTitle("which system theme do you want yo use?");
+                        AlertDialog alertDialog1 = builder1.
+                                setNegativeButton("White", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_blue,R.drawable.elipse2_blue,R.drawable.elipse3_blue,R.color.blue2, R.color.blue1, R.color.blue3, R.color.white);
+                                    }}).
+                                setPositiveButton("Black", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_blue,R.drawable.elipse2_blue,R.drawable.elipse3_blue,R.color.blue2, R.color.blue1, R.color.blue3, R.color.dark);
+                                    }}).create();
+                        alertDialog1.show();
                         break;
                     case 2:
+                        colorStyle(R.drawable.favorite_green,R.drawable.elipse2_green,R.drawable.elipse3_green,R.color.green2, R.color.green1, R.color.green3, R.color.white);
+
+                      AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+                      ViewGroup viewGroup2 = findViewById(android.R.id.content);
+                     builder2.setTitle("which system theme do you want yo use?");
+                     AlertDialog alertDialog2 = builder2.
+                     setNegativeButton("White", new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialog, int which) {
+                        colorStyle(R.drawable.favorite_green,R.drawable.elipse2_green,R.drawable.elipse3_green,R.color.green2, R.color.green1, R.color.green3, R.color.white);
+                    }}).
+                     setPositiveButton("Black", new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialog, int which) {
                         colorStyle(R.drawable.favorite_green,R.drawable.elipse2_green,R.drawable.elipse3_green,R.color.green2, R.color.green1, R.color.green3, R.color.dark);
-//                        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                        Window window1 = getWindow();
-//                        window1.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//                        window1.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//                        window1.setStatusBarColor(getResources().getColor(R.color.dark));
+                     }}).create();
+                            alertDialog2.show();
                         break;
                     case 3:
                         colorStyle(R.drawable.favorite_greenblue,R.drawable.elipse2_greenblue,R.drawable.elipse3, R.color.greenblue2,R.color.greenblue1, R.color.greenblue3, R.color.white);
+
+                        AlertDialog.Builder builder3 = new AlertDialog.Builder(MainActivity.this);
+                        ViewGroup viewGroup3 = findViewById(android.R.id.content);
+                        builder3.setTitle("which system theme do you want yo use?");
+                        AlertDialog alertDialog3 = builder3.
+                                setNegativeButton("White", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_greenblue,R.drawable.elipse2_greenblue,R.drawable.elipse3, R.color.greenblue2,R.color.greenblue1, R.color.greenblue3, R.color.white);
+                                    }}).
+                                setPositiveButton("Black", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_greenblue,R.drawable.elipse2_greenblue,R.drawable.elipse3, R.color.greenblue2,R.color.greenblue1, R.color.greenblue3, R.color.dark);
+                                    }}).create();
+                        alertDialog3.show();
                         break;
                     case 4:
                         colorStyle(R.drawable.favorite_purple,R.drawable.elipse2_purple,R.drawable.elipse3_purple,R.color.purple2, R.color.purple1, R.color.purple3, R.color.white);
+
+                        AlertDialog.Builder builder4 = new AlertDialog.Builder(MainActivity.this);
+                        ViewGroup viewGroup4 = findViewById(android.R.id.content);
+                        builder4.setTitle("which system theme do you want yo use?");
+                        AlertDialog alertDialog4 = builder4.
+                                setNegativeButton("White", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_purple,R.drawable.elipse2_purple,R.drawable.elipse3_purple,R.color.purple2, R.color.purple1, R.color.purple3, R.color.white);
+                                    }}).
+                                setPositiveButton("Black", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_purple,R.drawable.elipse2_purple,R.drawable.elipse3_purple,R.color.purple2, R.color.purple1, R.color.purple3, R.color.dark);
+                                    }}).create();
+                        alertDialog4.show();
                         break;
                     case 5:
                         colorStyle(R.drawable.favorite_orange,R.drawable.elipse2_orange,R.drawable.elipse3_orange, R.color.orange2,R.color.orange1, R.color.orange3, R.color.white);// Метод
+
+                        AlertDialog.Builder builder5 = new AlertDialog.Builder(MainActivity.this);
+                        ViewGroup viewGroup5 = findViewById(android.R.id.content);
+                        builder5.setTitle("which system theme do you want yo use?");
+                        AlertDialog alertDialog5 = builder5.
+                                setNegativeButton("White", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_orange,R.drawable.elipse2_orange,R.drawable.elipse3_orange, R.color.orange2,R.color.orange1, R.color.orange3, R.color.white);// Метод
+                                    }}).
+                                setPositiveButton("Black", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_orange,R.drawable.elipse2_orange,R.drawable.elipse3_orange, R.color.orange2,R.color.orange1, R.color.orange3, R.color.dark);// Метод
+                                    }}).create();
+                        alertDialog5.show();
                         break;
                     case 6:
                         colorStyle(R.drawable.favorite_red,R.drawable.elipse2_red,R.drawable.elipse3_red,R.color.red2, R.color.red1, R.color.red3, R.color.white);
+
+                        AlertDialog.Builder builder6 = new AlertDialog.Builder(MainActivity.this);
+                        ViewGroup viewGroup6 = findViewById(android.R.id.content);
+                        builder6.setTitle("which system theme do you want yo use?");
+                        AlertDialog alertDialog6 = builder6.
+                                setNegativeButton("White", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_red,R.drawable.elipse2_red,R.drawable.elipse3_red,R.color.red2, R.color.red1, R.color.red3, R.color.white);
+                                    }}).
+                                setPositiveButton("Black", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        colorStyle(R.drawable.favorite_red,R.drawable.elipse2_red,R.drawable.elipse3_red,R.color.red2, R.color.red1, R.color.red3, R.color.dark);
+                                    }}).create();
+                        alertDialog6.show();
                         break;
 
                  }
@@ -541,7 +642,11 @@ swipe = 2;
 
           background.setBackgroundColor(getResources().getColor(colorBack));
           litback.setBackgroundColor(getResources().getColor(colorBack));
+          plus1.setColorFilter(getResources().getColor(colorBack));
+          search.setColorFilter(getResources().getColor(colorBack));
+          searchmove.setColorFilter(getResources().getColor(colorBack));
 
+          getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
           Window window9 = getWindow();
           window9.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
           window9.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -554,12 +659,13 @@ swipe = 2;
 
           int[] colorList = null;
           if (stateDarkMode) {
-              colorList = new int[]{ContextCompat.getColor(this, R.color.dark), ContextCompat.getColor(this, color6)};
+              colorList = new int[]{ContextCompat.getColor(this, colorBack), ContextCompat.getColor(this, color6)};
           } else {
-              colorList = new int[]{ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, color6)}; }
+              colorList = new int[]{ContextCompat.getColor(this,colorBack), ContextCompat.getColor(this, color6)}; }
           ColorStateList colorStateList = new ColorStateList(bottomNavBarStateList, colorList);
           bottomNavigation.setItemIconTintList(colorStateList);
           bottomNavigation.setItemTextColor(colorStateList);
+
 
           SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
           editor.putInt("COLOR1", color1);
