@@ -396,7 +396,7 @@ swipe = 2;
 //                    systhem.setTextColor(getResources().getColor(R.color.white));
 //                    plus1.setColorFilter(getResources().getColor(R.color.dark));
 
-                    colorStyle(0,0, 0, 0 , 0, 0, R.color.dark);
+//                    colorStyle(, R.color.dark);
 
                 } else {
                     Window window = getWindow();
@@ -541,6 +541,11 @@ swipe = 2;
 
           background.setBackgroundColor(getResources().getColor(colorBack));
           litback.setBackgroundColor(getResources().getColor(colorBack));
+
+          Window window9 = getWindow();
+          window9.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+          window9.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+          window9.setStatusBarColor(getResources().getColor(colorBack));
 
           plus.setColorFilter(getResources().getColor(colorDec1));
           elipse.setColorFilter(getResources().getColor(colorDec1));
