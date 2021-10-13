@@ -52,7 +52,7 @@ public class Mywidget extends AppWidgetProvider  {
 
         List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll("");
         Collections.reverse(notatkas);
-        StateAdapter stateAdapter = new StateAdapter(context, notatkas, color1, color2, color3, color4,  color5, color6, color1);
+        StateAdapter stateAdapter = new StateAdapter(context, notatkas, color1, color2, color3, color4,  color5, color6, color1, color1);
         stateAdapter.setOnClickToMore((StateAdapter.OnClickToMore) context);
 
         recyclerViewNotesw = recyclerViewNotesw.findViewById(R.id.wv);

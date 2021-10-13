@@ -34,11 +34,13 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
         int colorTitle = R.drawable.elipse2;
         int colorDec = R.drawable.elipse3;
          int colorBack = R.drawable.elipse3;
+    int colotText = R.color.black;
 
 
         int colorTitle1 = R.color.greenblue1;
         int colorDec1 = R.color.greenblue2;
         int colorBottom = R.color.greenblue3;
+
 
     private static final String TAG = "Swipe position";
     private float x1, x2, y1, y2;
@@ -55,7 +57,7 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
             this.onClickToMore = onClickToMore;
         }
 
-        StateAdapter(Context context, List<Notatka> notatkas, int colorFav, int colorTitle, int colorDec, int colorTitle1, int colorDec1, int colorBottom, int colorBack) {
+        StateAdapter(Context context, List<Notatka> notatkas, int colorFav, int colorTitle, int colorDec, int colorTitle1, int colorDec1, int colorBottom, int colorBack, int colorText) {
             this.context = context;
             this.notatkas = notatkas;
             this.inflater = LayoutInflater.from(context);
@@ -67,6 +69,8 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
             this.colorDec1 = colorDec1;
             this.colorBottom = colorBottom;
             this.colorBack = colorBack;
+            this.colotText = colotText;
+
         }
 
         @NonNull
