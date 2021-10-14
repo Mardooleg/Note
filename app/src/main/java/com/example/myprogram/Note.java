@@ -83,7 +83,9 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
         window1.setStatusBarColor(getResources().getColor(colorDec1));
         background2.setBackgroundColor(getResources().getColor(colorDec1));
         title.setHintTextColor(getResources().getColor(colorTitle1));
+        title.setTextColor(getResources().getColor(colorTitle1));
         note.setHintTextColor(getResources().getColor(colorTitle1));
+        note.setTextColor(getResources().getColor(colorTitle1));
         tick.setColorFilter(getResources().getColor(colorTitle1));
         back.setColorFilter(getResources().getColor(colorTitle1));
 

@@ -305,7 +305,6 @@ android:visibility="visible"
             android:textSize="25sp"
             android:textStyle="bold"
             android:layout_marginTop="25dp"
-            android:checked="false"
             android:visibility="invisible"
             android:textColor="@color/black"
             />
@@ -426,7 +425,19 @@ android:visibility="invisible"
 
 
             />
+        <com.hitomi.cmlibrary.CircleMenu
+            android:id="@+id/circle_menu1"
+            android:layout_width="240dp"
+            android:layout_height="170dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="180dp"
+            android:layout_marginEnd="-50dp"
+            android:paddingTop="10dp"
+            android:visibility="invisible"
 
+
+            />
     </RelativeLayout>
 
 </RelativeLayout>
