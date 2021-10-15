@@ -10,39 +10,39 @@
     <TextView
         android:background="#FFFFFF"
         android:layout_width="match_parent"
-    android:layout_height="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/background1"
 
-    ></TextView>
+        ></TextView>
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarDivider"-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:background="@drawable/gradient_status"-->
-<!--        ></androidx.appcompat.widget.Toolbar>-->
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:src="@drawable/background5"-->
-<!--        android:scaleType="fitXY"-->
-<!--        ></ImageView>-->
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="?attr/actionBarDivider"-->
+    <!--        android:id="@+id/toolbar"-->
+    <!--        android:background="@drawable/gradient_status"-->
+    <!--        ></androidx.appcompat.widget.Toolbar>-->
+    <!--    <ImageView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:src="@drawable/background5"-->
+    <!--        android:scaleType="fitXY"-->
+    <!--        ></ImageView>-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-android:textSize="20dp"
+        android:textSize="20dp"
         android:text="𝐘𝐨𝐮 𝐝𝐨𝐧'𝐭 𝐡𝐚𝐯𝐞 𝐧𝐨𝐭𝐞𝐬 𝐡𝐞𝐫𝐞"
         android:textColor="@color/dark"
         android:id="@+id/empty"
         ></TextView>
     <ImageView
-     android:id="@+id/astr"
+        android:id="@+id/astr"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_astronaut"
-      android:layout_above="@+id/empty"
+        android:layout_above="@+id/empty"
         android:visibility="visible"
         ></ImageView>
 
@@ -87,24 +87,24 @@ android:textSize="20dp"
         android:visibility="gone"
         ></ImageView>
 
-   <TextView
-       android:layout_height="50dp"
-       android:layout_width="match_parent"
-       android:id="@+id/toptitle"
-       android:paddingTop="3dp"
-       android:background="#00C3A0"
-       android:visibility="invisible"
-       android:text=" Favorite         "
-       android:textStyle="italic"
-       android:textSize="30sp"
-       android:textColor="#000000"
-       android:paddingBottom="2dp"
-       android:paddingStart="10dp"
-       android:drawableLeft="@drawable/likeheart"
-       android:layout_centerHorizontal="true"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent"
-       ></TextView>
+    <TextView
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:id="@+id/toptitle"
+        android:paddingTop="3dp"
+        android:background="#00C3A0"
+        android:visibility="invisible"
+        android:text=" Favorite         "
+        android:textStyle="italic"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        android:paddingBottom="2dp"
+        android:paddingStart="10dp"
+        android:drawableLeft="@drawable/likeheart"
+        android:layout_centerHorizontal="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        ></TextView>
 
 
 
@@ -150,7 +150,7 @@ android:textSize="20dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentStart="true"
-android:layout_marginRight="25dp"
+            android:layout_marginRight="25dp"
             android:layout_marginLeft="25dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
@@ -190,15 +190,15 @@ android:layout_marginRight="25dp"
             ></TextView>
 
         <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="25dp"
-        android:src="@drawable/elipse"
-        android:id="@+id/elipse"
-        />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/elipse"
+            android:id="@+id/elipse"
+            />
         <ImageView
             android:id="@+id/searchmove2"
             android:layout_width="40dp"
@@ -256,7 +256,7 @@ android:layout_marginRight="25dp"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="65dp"
-android:visibility="visible"
+            android:visibility="visible"
             />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -311,13 +311,13 @@ android:visibility="visible"
 
         <TextView
             android:id="@+id/systhem"
+            android:layout_marginTop="57dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="110dp"
             android:text="System theme"
             android:textColor="@color/black"
             android:textSize="25sp"
@@ -331,7 +331,7 @@ android:visibility="visible"
             android:layout_marginLeft="25dp"
             android:id="@+id/item1"
             android:visibility="gone"
-    ></ImageView>
+            ></ImageView>
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -379,9 +379,9 @@ android:visibility="visible"
             android:layout_marginTop="120dp"
             android:layout_marginLeft="25dp"
             android:id="@+id/item6"
-android:visibility="gone"
+            android:visibility="gone"
             ></ImageView>
-<!---->
+        <!---->
 
         <EditText
             android:id="@+id/acet_status"
@@ -397,20 +397,20 @@ android:visibility="gone"
             android:inputType="none"
             android:visibility="invisible"></EditText>
 
-<Switch
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/askbd"
-    android:textStyle="bold"
-    android:text="Ask before delete?"
-    android:layout_marginRight="25dp"
-    android:layout_marginLeft="25dp"
-    android:layout_marginTop="165dp"
-    android:textSize="23dp"
-    android:checked="false"
-android:visibility="invisible"
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/askbd"
+            android:textStyle="bold"
+            android:text="Ask before delete?"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="165dp"
+            android:textSize="23dp"
+            android:checked="false"
+            android:visibility="invisible"
 
-    ></Switch>
+            ></Switch>
 
         <com.hitomi.cmlibrary.CircleMenu
             android:id="@+id/circle_menu"
@@ -418,7 +418,7 @@ android:visibility="invisible"
             android:layout_height="170dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="-10dp"
             android:layout_marginEnd="-50dp"
             android:paddingTop="10dp"
             android:visibility="invisible"
