@@ -11,12 +11,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.URLUtil;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +27,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,7 +77,6 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
 
         colorDec1 = getIntent().getIntExtra("COLOR_TITLE", R.color.greenblue1);
         colorTitle1 = getIntent().getIntExtra("COLOR_DEC", R.color.greenblue2);
-
 
 
 
@@ -169,7 +172,14 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
-    
+    public static boolean IsValidUrl(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            return URLUtil.isValidUrl(urlString) && Patterns.WEB_URL.matcher(urlString).matches();
+        } catch (MalformedURLException ignored) {
+        }
+        return false;
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

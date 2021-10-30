@@ -57,14 +57,14 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener, StateAdapter.OnClickToMore, StateAdapter1.OnClickToMore, GestureDetector.OnGestureListener{
+public class MainActivity extends AppCompatActivity implements OnClickListener, StateAdapter.OnClickToMore, StateAdapter1.OnClickToMore{
     boolean stateDarkMode = false;
         private AppCompatEditText acetStatus;
     private ListPopupWindow statusPopupList;
     private Dialog dialog;
     private Button ShowDialog;
 
-    int swipe = 1;
+//    int swipe = 1;
 
 //    int statusbar = 1;
 //    1 - white; 0 - black
@@ -124,10 +124,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private BottomNavigationView bottomNavigation;
 
 
-    private static final String TAG = "Swipe position";
-    private float x1, x2, y1, y2;
-    private static int MIN_DISTANSE = 150;
-    private GestureDetector gestureDetector;
+
 
     private ViewPager viewPager;
 
@@ -157,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 // Hide the status bar.
 
-        this.gestureDetector = new GestureDetector (MainActivity.this, this);
+//        this.gestureDetector = new GestureDetector (MainActivity.this, this);
 
         SharedPreferences prefs = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
         /// R.drawable.favorite_greenblue,R.drawable.elipse2_greenblue,R.drawable.elipse3_greenblue,R.color.greenblue1, R.color.greenblue2);
@@ -711,7 +708,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_nav);
         viewPager = findViewById(R.id.viewpager);
-        setUpViewPager();
+//        setUpViewPager();
         Menu menu = bottomNavigation.getMenu();
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
@@ -747,7 +744,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 systhem.setVisibility(INVISIBLE);
                                 circleMenu.setVisibility(INVISIBLE);
                                 recyclerViewFavorite.setVisibility(VISIBLE);
-                                swipe = 0;
+//                                swipe = 0;
                                 viewPager.setCurrentItem(0);
 
                                 break;
@@ -769,7 +766,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
                                 circleMenu.setVisibility(VISIBLE);
                                 systhem.setVisibility(VISIBLE);
-                                swipe = 2;
+//                                swipe = 2;
 
                                 viewPager.setCurrentItem(2);
 
@@ -797,7 +794,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //                                item4.setVisibility(INVISIBLE);
 //                                item5.setVisibility(INVISIBLE);
 //                                item6.setVisibility(INVISIBLE);
-                                swipe = 1;
+//                                swipe = 1;
                                 viewPager.setCurrentItem(1);
 
 
@@ -1189,266 +1186,266 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         dialog.show();
 
     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Animation anim_swipe = null;
-        Animation anim_swipe2 = null;
-        gestureDetector.onTouchEvent(event);
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                y1 = event.getY();
-                break;
-
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                y2 = event.getY();
-                float valueX = x2 - x1;
-                float valueY = y2 - y1;
-
-
-                if (Math.abs(valueX) > MIN_DISTANSE) {
-
-                    if (x2 > x1) {
-                        if (swipe == 1) {
-
-
-                            plus.setVisibility(GONE);
-                            plus1.setVisibility(GONE);
-                            recyclerViewNotes.setVisibility(GONE);
-                            List<Notatka> notatkas1 = App.getInstance().getAppDatabase().modelDao().getAllFavorite(edtext.getText().toString());
-                            Collections.reverse(notatkas1);
-                            StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas1, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom);
-                            stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
-                            edtext.setVisibility(GONE);
-                            recyclerViewFavorite.setAdapter(stateAdapter1);
-                            recyclerViewFavorite.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-
-//                            item1.setVisibility(INVISIBLE);
-//                            item2.setVisibility(INVISIBLE);
-//                            item3.setVisibility(INVISIBLE);
-//                            item4.setVisibility(INVISIBLE);
-//                            item5.setVisibility(INVISIBLE);
-//                            item6.setVisibility(INVISIBLE);
-                            systhem.setVisibility(INVISIBLE);
-
-
-                            recyclerViewFavorite.setVisibility(VISIBLE);
-
-                            Menu menu = bottomNavigation.getMenu();
-                            MenuItem menuItem = menu.getItem(0);
-                            menuItem.setChecked(true);
-                        } else if (swipe == 2) {
-                            anim_swipe = AnimationUtils.loadAnimation(this, R.anim.swipe_anim);
-                            anim_swipe2 = AnimationUtils.loadAnimation(this, R.anim.swipe_anim2);
-
-                            plus1.setVisibility(VISIBLE);
-                            plus.setVisibility(VISIBLE);
-                            recyclerViewFavorite.setVisibility(GONE);
-                            edtext.setVisibility(GONE);
-                            List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
-                            Collections.reverse(notatkas);
-                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom, colorBack, colorText);
-                            stateAdapter.setOnClickToMore(MainActivity.this::onClick);
-                            recyclerViewNotes.setAdapter(stateAdapter);
-                            recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                            recyclerViewNotes.setVisibility(VISIBLE);
-                            search.setVisibility(VISIBLE);
-                            elipse.setVisibility(VISIBLE);
-                            systhem.setVisibility(INVISIBLE);
-
-//                            item1.setVisibility(INVISIBLE);
-//                            item2.setVisibility(INVISIBLE);
-//                            item3.setVisibility(INVISIBLE);
-//                            item4.setVisibility(INVISIBLE);
-//                            item5.setVisibility(INVISIBLE);
-//                            item6.setVisibility(INVISIBLE);
-
-                            Menu menu1 = bottomNavigation.getMenu();
-                            MenuItem menuItem1 = menu1.getItem(1);
-                            menuItem1.setChecked(true);
-                        }
-
-                    } else {
-
+//
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
+//        Animation anim_swipe = null;
+//        Animation anim_swipe2 = null;
+//        gestureDetector.onTouchEvent(event);
+//        switch (event.getAction()) {
+//            case MotionEvent.ACTION_DOWN:
+//                x1 = event.getX();
+//                y1 = event.getY();
+//                break;
+//
+//            case MotionEvent.ACTION_UP:
+//                x2 = event.getX();
+//                y2 = event.getY();
+//                float valueX = x2 - x1;
+//                float valueY = y2 - y1;
 //
 
-                    }
-                } else if (Math.abs(valueY) > MIN_DISTANSE) ;
-            {
-                if (y2 > y1) {
+//                if (Math.abs(valueX) > MIN_DISTANSE) {
+//
+//                    if (x2 > x1) {
+//                        if (swipe == 1) {
+//
+//
+//                            plus.setVisibility(GONE);
+//                            plus1.setVisibility(GONE);
+//                            recyclerViewNotes.setVisibility(GONE);
+//                            List<Notatka> notatkas1 = App.getInstance().getAppDatabase().modelDao().getAllFavorite(edtext.getText().toString());
+//                            Collections.reverse(notatkas1);
+//                            StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas1, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom);
+//                            stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
+//                            edtext.setVisibility(GONE);
+//                            recyclerViewFavorite.setAdapter(stateAdapter1);
+//                            recyclerViewFavorite.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+//
+////                            item1.setVisibility(INVISIBLE);
+////                            item2.setVisibility(INVISIBLE);
+////                            item3.setVisibility(INVISIBLE);
+////                            item4.setVisibility(INVISIBLE);
+////                            item5.setVisibility(INVISIBLE);
+////                            item6.setVisibility(INVISIBLE);
+//                            systhem.setVisibility(INVISIBLE);
+//
+//
+//                            recyclerViewFavorite.setVisibility(VISIBLE);
+//
+//                            Menu menu = bottomNavigation.getMenu();
+//                            MenuItem menuItem = menu.getItem(0);
+//                            menuItem.setChecked(true);
+//                        } else if (swipe == 2) {
+//                            anim_swipe = AnimationUtils.loadAnimation(this, R.anim.swipe_anim);
+//                            anim_swipe2 = AnimationUtils.loadAnimation(this, R.anim.swipe_anim2);
+//
+//                            plus1.setVisibility(VISIBLE);
+//                            plus.setVisibility(VISIBLE);
+//                            recyclerViewFavorite.setVisibility(GONE);
+//                            edtext.setVisibility(GONE);
+//                            List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
+//                            Collections.reverse(notatkas);
+//                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom, colorBack, colorText);
+//                            stateAdapter.setOnClickToMore(MainActivity.this::onClick);
+//                            recyclerViewNotes.setAdapter(stateAdapter);
+//                            recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+//                            recyclerViewNotes.setVisibility(VISIBLE);
+//                            search.setVisibility(VISIBLE);
+//                            elipse.setVisibility(VISIBLE);
+//                            systhem.setVisibility(INVISIBLE);
+//
+////                            item1.setVisibility(INVISIBLE);
+////                            item2.setVisibility(INVISIBLE);
+////                            item3.setVisibility(INVISIBLE);
+////                            item4.setVisibility(INVISIBLE);
+////                            item5.setVisibility(INVISIBLE);
+////                            item6.setVisibility(INVISIBLE);
+//
+//                            Menu menu1 = bottomNavigation.getMenu();
+//                            MenuItem menuItem1 = menu1.getItem(1);
+//                            menuItem1.setChecked(true);
+//                        }
+//
+//                    } else {
+//
+////
+//
+//                    }
+//                } else if (Math.abs(valueY) > MIN_DISTANSE) ;
+//            {
+//                if (y2 > y1) {
+//
+//
+//                } else {
+//
+//
+//                }
+//            }
+////        }
+//        if (anim_swipe != null) {
+////            item1.startAnimation(anim_swipe);
+////            item2.startAnimation(anim_swipe);
+////            item3.startAnimation(anim_swipe);
+////            item4.startAnimation(anim_swipe);
+////            item5.startAnimation(anim_swipe);
+////            item6.startAnimation(anim_swipe);
+//            systhem.startAnimation(anim_swipe);
+//
+//            recyclerViewNotes.startAnimation(anim_swipe2);
+//            elipse.startAnimation(anim_swipe2);
+//            search.startAnimation(anim_swipe2);
+//            plus.startAnimation(anim_swipe2);
+//            plus1.startAnimation(anim_swipe2);
+//        }
+//        return super.onTouchEvent(event);
+//
+//
+//    }
+//
+//    @Override
+//    public boolean onDown(MotionEvent e) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void onShowPress(MotionEvent e) {
+//
+//    }
+//
+//    @Override
+//    public boolean onSingleTapUp(MotionEvent e) {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void onLongPress(MotionEvent e) {
+//
+//    }
+//
+//    @Override
+//    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//        return false;
+////    }
+//    private  void setUpViewPager(){
+//        ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+//        viewPager.setAdapter(viewPageAdapter);
+//
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                switch (position){
+//                    case 0:
+//                        Menu menu1 = bottomNavigation.getMenu();
+//                        MenuItem menuItem1 = menu1.getItem(0);
+//                        menuItem1.setChecked(true);
+//
+//                        plus.setVisibility(GONE);
+//                        plus1.setVisibility(GONE);
+//                        recyclerViewNotes.setVisibility(GONE);
+//                        List<Notatka> notatkas1 = App.getInstance().getAppDatabase().modelDao().getAllFavorite(edtext.getText().toString());
+//                        Collections.reverse(notatkas1);
+//                        StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas1 , colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
+//                        stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
+//                        edtext.setVisibility(GONE);
+//                        recyclerViewFavorite.setAdapter(stateAdapter1);
+//                        recyclerViewFavorite.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+//
+////        item1.setVisibility(INVISIBLE);
+////        item2.setVisibility(INVISIBLE);
+////        item3.setVisibility(INVISIBLE);
+////        item4.setVisibility(INVISIBLE);
+////        item5.setVisibility(INVISIBLE);
+////        item6.setVisibility(INVISIBLE);
+//                        systhem.setVisibility(INVISIBLE);
+//
+//                        recyclerViewFavorite.setVisibility(VISIBLE);
+//                        break;
+//                    case 1:
+//                        Menu menu2 = bottomNavigation.getMenu();
+//                        MenuItem menuItem2 = menu2.getItem(1);
+//                        menuItem2.setChecked(true);
+//                        plus1.setVisibility(VISIBLE);
+//                        plus.setVisibility(VISIBLE);
+//                        recyclerViewFavorite.setVisibility(GONE);
+//                        edtext.setVisibility(GONE);
+//                        List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
+//                        Collections.reverse(notatkas);
+//                        StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
+//                        stateAdapter.setOnClickToMore(MainActivity.this::onClick);
+//                        recyclerViewNotes.setAdapter(stateAdapter);
+//                        recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+//                        recyclerViewNotes.setVisibility(VISIBLE);
+//                        search.setVisibility(VISIBLE);
+//                        elipse.setVisibility(VISIBLE);
+//                        systhem.setVisibility(INVISIBLE);
+//
+////        item1.setVisibility(INVISIBLE);
+////        item2.setVisibility(INVISIBLE);
+////        item3.setVisibility(INVISIBLE);
+////        item4.setVisibility(INVISIBLE);
+////        item5.setVisibility(INVISIBLE);
+////        item6.setVisibility(INVISIBLE);
+//                        viewPager.setCurrentItem(1);
+//
+//                        break;
+//                    case 2:
+//                        Menu menu3 = bottomNavigation.getMenu();
+//                        MenuItem menuItem3 = menu3.getItem(2);
+//                        menuItem3.setChecked(true);
+//
+//                        plus1.setVisibility(GONE);
+//                        plus.setVisibility(GONE);
+//                        edtext.setVisibility(GONE);
+//
+//                        recyclerViewFavorite.setVisibility(GONE);
+//                        recyclerViewNotes.setVisibility(GONE);
+//
+//                        searchmove.setVisibility(GONE);
+//                        search.setVisibility(GONE);
+//                        elipse.setVisibility(GONE);
+//                        elipse1.setVisibility(GONE);
+//
+//                        astonaut.setVisibility(GONE);
+//                        empty.setVisibility(GONE);
+//
+////        item1.setVisibility(VISIBLE);
+////        item2.setVisibility(VISIBLE);
+////        item3.setVisibility(VISIBLE);
+////        item4.setVisibility(VISIBLE);
+////        item5.setVisibility(VISIBLE);
+////        item6.setVisibility(VISIBLE);
+//                        systhem.setVisibility(VISIBLE);
+//                        break;
+//
+//                }
 
 
-                } else {
 
 
-                }
-            }
-        }
-        if (anim_swipe != null) {
-//            item1.startAnimation(anim_swipe);
-//            item2.startAnimation(anim_swipe);
-//            item3.startAnimation(anim_swipe);
-//            item4.startAnimation(anim_swipe);
-//            item5.startAnimation(anim_swipe);
-//            item6.startAnimation(anim_swipe);
-            systhem.startAnimation(anim_swipe);
-
-            recyclerViewNotes.startAnimation(anim_swipe2);
-            elipse.startAnimation(anim_swipe2);
-            search.startAnimation(anim_swipe2);
-            plus.startAnimation(anim_swipe2);
-            plus1.startAnimation(anim_swipe2);
-        }
-        return super.onTouchEvent(event);
-
-
-    }
-
-    @Override
-    public boolean onDown(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent e) {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent e) {
-
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
-    }
-    private  void setUpViewPager(){
-        ViewPageAdapter viewPageAdapter = new ViewPageAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewPager.setAdapter(viewPageAdapter);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                switch (position){
-                    case 0:
-                        Menu menu1 = bottomNavigation.getMenu();
-                        MenuItem menuItem1 = menu1.getItem(0);
-                        menuItem1.setChecked(true);
-
-                        plus.setVisibility(GONE);
-                        plus1.setVisibility(GONE);
-                        recyclerViewNotes.setVisibility(GONE);
-                        List<Notatka> notatkas1 = App.getInstance().getAppDatabase().modelDao().getAllFavorite(edtext.getText().toString());
-                        Collections.reverse(notatkas1);
-                        StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas1 , colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
-                        stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
-                        edtext.setVisibility(GONE);
-                        recyclerViewFavorite.setAdapter(stateAdapter1);
-                        recyclerViewFavorite.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-
-//        item1.setVisibility(INVISIBLE);
-//        item2.setVisibility(INVISIBLE);
-//        item3.setVisibility(INVISIBLE);
-//        item4.setVisibility(INVISIBLE);
-//        item5.setVisibility(INVISIBLE);
-//        item6.setVisibility(INVISIBLE);
-                        systhem.setVisibility(INVISIBLE);
-
-                        recyclerViewFavorite.setVisibility(VISIBLE);
-                        break;
-                    case 1:
-                        Menu menu2 = bottomNavigation.getMenu();
-                        MenuItem menuItem2 = menu2.getItem(1);
-                        menuItem2.setChecked(true);
-                        plus1.setVisibility(VISIBLE);
-                        plus.setVisibility(VISIBLE);
-                        recyclerViewFavorite.setVisibility(GONE);
-                        edtext.setVisibility(GONE);
-                        List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
-                        Collections.reverse(notatkas);
-                        StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
-                        stateAdapter.setOnClickToMore(MainActivity.this::onClick);
-                        recyclerViewNotes.setAdapter(stateAdapter);
-                        recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                        recyclerViewNotes.setVisibility(VISIBLE);
-                        search.setVisibility(VISIBLE);
-                        elipse.setVisibility(VISIBLE);
-                        systhem.setVisibility(INVISIBLE);
-
-//        item1.setVisibility(INVISIBLE);
-//        item2.setVisibility(INVISIBLE);
-//        item3.setVisibility(INVISIBLE);
-//        item4.setVisibility(INVISIBLE);
-//        item5.setVisibility(INVISIBLE);
-//        item6.setVisibility(INVISIBLE);
-                        viewPager.setCurrentItem(1);
-
-                        break;
-                    case 2:
-                        Menu menu3 = bottomNavigation.getMenu();
-                        MenuItem menuItem3 = menu3.getItem(2);
-                        menuItem3.setChecked(true);
-
-                        plus1.setVisibility(GONE);
-                        plus.setVisibility(GONE);
-                        edtext.setVisibility(GONE);
-
-                        recyclerViewFavorite.setVisibility(GONE);
-                        recyclerViewNotes.setVisibility(GONE);
-
-                        searchmove.setVisibility(GONE);
-                        search.setVisibility(GONE);
-                        elipse.setVisibility(GONE);
-                        elipse1.setVisibility(GONE);
-
-                        astonaut.setVisibility(GONE);
-                        empty.setVisibility(GONE);
-
-//        item1.setVisibility(VISIBLE);
-//        item2.setVisibility(VISIBLE);
-//        item3.setVisibility(VISIBLE);
-//        item4.setVisibility(VISIBLE);
-//        item5.setVisibility(VISIBLE);
-//        item6.setVisibility(VISIBLE);
-                        systhem.setVisibility(VISIBLE);
-                        break;
-
-                }
-
-
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
+//
+//
+//    }
+//
+//
+//    @Override
+//    public void onPointerCaptureChanged(boolean hasCapture) {
+//
+//    }
 }

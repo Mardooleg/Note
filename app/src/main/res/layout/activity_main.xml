@@ -419,7 +419,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="-10dp"
-            android:layout_marginEnd="-50dp"
+            android:layout_marginEnd="-45dp"
             android:paddingTop="10dp"
             android:visibility="invisible"
 
