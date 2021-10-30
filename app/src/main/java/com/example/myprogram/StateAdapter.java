@@ -2,6 +2,7 @@ package com.example.myprogram;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -130,6 +131,13 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
                 }
             });
 
+
+//            holder.favorite.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
             holder.favorite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

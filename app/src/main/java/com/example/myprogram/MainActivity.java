@@ -601,9 +601,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //        ImageView item6 = findViewById(R.id.item6);
 //        item6.setOnClickListener(this);
 
-        search = findViewById(R.id.search);
-        ImageView search = findViewById(R.id.search);
-        search.setOnClickListener(this);
 
         plus1 = findViewById(R.id.plus1);
         ImageView plus1 = findViewById(R.id.plus1);
@@ -729,11 +726,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 Collections.reverse(notatkas1);
                                 StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas1 , colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
                                 stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
-                                edtext.setVisibility(GONE);
+                                edtext.setVisibility(VISIBLE);
 //                                switch1.setVisibility(INVISIBLE);
 //                                acet_status.setVisibility(INVISIBLE);
                                 recyclerViewFavorite.setAdapter(stateAdapter1);
                                 recyclerViewFavorite.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+                                searchmove.setVisibility(VISIBLE);
 
 //                                item1.setVisibility(INVISIBLE);
 //                                item2.setVisibility(INVISIBLE);
@@ -756,10 +754,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 recyclerViewFavorite.setVisibility(GONE);
                                 recyclerViewNotes.setVisibility(GONE);
 
-                                searchmove.setVisibility(GONE);
-                                search.setVisibility(GONE);
                                 elipse.setVisibility(GONE);
                                 elipse1.setVisibility(GONE);
+                                searchmove.setVisibility(INVISIBLE);
+//                                search.setVisibility(GONE);
+
 
                                 astonaut.setVisibility(GONE);
                                 empty.setVisibility(GONE);
@@ -775,7 +774,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 plus1.setVisibility(VISIBLE);
                                 plus.setVisibility(VISIBLE);
                                 recyclerViewFavorite.setVisibility(GONE);
-                                edtext.setVisibility(GONE);
                                 List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
                                 Collections.reverse(notatkas);
                                 StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
@@ -783,8 +781,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 recyclerViewNotes.setAdapter(stateAdapter);
                                 recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                                 recyclerViewNotes.setVisibility(VISIBLE);
-                                search.setVisibility(VISIBLE);
+//                                search.setVisibility(VISIBLE);
                                 elipse.setVisibility(VISIBLE);
+                                elipse1.setVisibility(VISIBLE);
+                                edtext.setVisibility(VISIBLE);
+searchmove.setVisibility(VISIBLE);
+
                                 systhem.setVisibility(INVISIBLE);
                                 circleMenu.setVisibility(INVISIBLE);
 //                                acet_status.setVisibility(INVISIBLE);
@@ -894,11 +896,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         background.setBackgroundColor(getResources().getColor(colorBack));
         litback.setBackgroundColor(getResources().getColor(colorBack));
         plus1.setColorFilter(getResources().getColor(colorBack));
-        search.setColorFilter(getResources().getColor(colorBack));
+//        search.setColorFilter(getResources().getColor(colorBack));
         searchmove.setColorFilter(getResources().getColor(colorBack));
         systhem.setTextColor(getResources().getColor(colorText));
-
-
+        edtext.setHintTextColor(getResources().getColor(colorBack));
+        edtext.setTextColor(getResources().getColor(colorBack));
+        empty.setTextColor(getResources().getColor(colorText));
+        searchmove.setColorFilter(getResources().getColor(colorBack));
 //        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
 //        }
@@ -1015,28 +1019,19 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         Animation anim = null;
         Animation anim2 = null;
         switch (v.getId()) {
-            case R.id.search:
-                anim = AnimationUtils.loadAnimation(this, R.anim.search_anim);
-                search.setVisibility(GONE);
-                elipse.setVisibility(VISIBLE);
-                elipse1.setVisibility(VISIBLE);
-                searchmove.setVisibility(VISIBLE);
-                edtext.setVisibility(VISIBLE);
-                anim2 = AnimationUtils.loadAnimation(this, R.anim.elipse_anim);
-                break;
 
-            case R.id.searchmove:
-                closeKeyboard();
-                anim = AnimationUtils.loadAnimation(this, R.anim.search_anim2);
-                search.setVisibility(VISIBLE);
-                elipse.setVisibility(VISIBLE);
-                elipse1.setVisibility(INVISIBLE);
-                searchmove.setVisibility(INVISIBLE);
-                edtext.setVisibility(GONE);
-                anim2 = AnimationUtils.loadAnimation(this, R.anim.elipse_anim);
-                elipse4.setVisibility(INVISIBLE);
-                edtext.setText("");
-                break;
+//            case R.id.searchmove:
+//                closeKeyboard();
+//                anim = AnimationUtils.loadAnimation(this, R.anim.search_anim2);
+//                search.setVisibility(VISIBLE);
+//                elipse.setVisibility(VISIBLE);
+//                elipse1.setVisibility(INVISIBLE);
+//                searchmove.setVisibility(INVISIBLE);
+//                edtext.setVisibility(GONE);
+//                anim2 = AnimationUtils.loadAnimation(this, R.anim.elipse_anim);
+//                elipse4.setVisibility(INVISIBLE);
+//                edtext.setText("");
+//                break;
 
 
             case R.id.plus1:
