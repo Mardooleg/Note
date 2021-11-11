@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:text="𝐘𝐨𝐮 𝐝𝐨𝐧'𝐭 𝐡𝐚𝐯𝐞 𝐧𝐨𝐭𝐞𝐬 𝐡𝐞𝐫𝐞"
         android:textColor="@color/dark"
         android:id="@+id/empty"
@@ -45,24 +45,25 @@
         android:layout_above="@+id/empty"
         android:visibility="visible"
         ></ImageView>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="𝐘𝐨𝐮 𝐝𝐨𝐧'𝐭 𝐡𝐚𝐯𝐞 𝐟𝐚𝐯𝐨𝐫𝐢𝐭𝐞 𝐡𝐞𝐫𝐞"
         android:textColor="@color/black"
+        android:textSize="20sp"
         android:id="@+id/emptyres"
         android:visibility="gone"
 
         ></TextView>
     <ImageView
+
         android:id="@+id/astr1"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_astronaut__1_"
-        android:layout_above="@+id/empty"
+        android:layout_above="@+id/emptyres"
         android:visibility="gone"
         ></ImageView>
 

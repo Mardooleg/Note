@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
     EditText title;
     EditText note;
     ImageView tick;
+    ImageView delete;
     Notatka notatka;
     TextView background2;
 
@@ -73,11 +75,16 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
         ImageView tick = findViewById(R.id.tick);
         tick.setOnClickListener(this);
 
+        delete = findViewById(R.id.delete);
+        ImageView delete = findViewById(R.id.delete);
+        delete.setOnClickListener(this);
+
         notatka = getIntent().getParcelableExtra("STRING_NOTE");
 
         colorDec1 = getIntent().getIntExtra("COLOR_TITLE", R.color.greenblue1);
         colorTitle1 = getIntent().getIntExtra("COLOR_DEC", R.color.greenblue2);
 
+        getWindow().setNavigationBarColor(getResources().getColor(colorDec1));
 
 
         Window window1 = getWindow();
@@ -89,6 +96,7 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
         title.setTextColor(getResources().getColor(colorTitle1));
         note.setHintTextColor(getResources().getColor(colorTitle1));
         note.setTextColor(getResources().getColor(colorTitle1));
+        delete.setColorFilter(getResources().getColor(colorTitle1));
         tick.setColorFilter(getResources().getColor(colorTitle1));
         back.setColorFilter(getResources().getColor(colorTitle1));
 
@@ -121,7 +129,7 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
                         public void onClick(DialogInterface dialog, int which1) {
 
                             Toast.makeText(getApplicationContext(), "Note has been saved",  Toast.LENGTH_SHORT).show();
-
+//
                             if (getIntent().getParcelableExtra("STRING_NOTE") != null) {
                                 notatka.setTitle(title.getText().toString());
                                 notatka.setNote(note.getText().toString());
@@ -147,6 +155,11 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
                                 finish();
 
                             }
+
+//                            App.getInstance().getAppDatabase().modelDao().delete(notatka);
+//
+//                            MediaPlayer delete_pop= MediaPlayer.create(Note.this, R.raw.delete);
+//                            delete_pop.start();
 
 
                         }
@@ -187,6 +200,16 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
 
                 showDialog(DIALOG);
 
+                break;
+            case R.id.delete:
+
+                Intent intent4 = new Intent(Note.this, MainActivity.class);
+                Note.this.startActivity(intent4);
+                App.getInstance().getAppDatabase().modelDao().delete(notatka);
+
+
+//                            MediaPlayer delete_pop= MediaPlayer.create(Note.this, R.raw.delete);
+//                            delete_pop.start();
                 break;
 
             case R.id.tick:

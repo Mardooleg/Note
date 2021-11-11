@@ -7,12 +7,14 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,6 +23,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.shapes.Shape;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         private AppCompatEditText acetStatus;
     private ListPopupWindow statusPopupList;
     private Dialog dialog;
+    private Dialog dialog1;
+
     private Button ShowDialog;
 
 //    int swipe = 1;
@@ -125,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 
 
-
     private ViewPager viewPager;
 
 
@@ -135,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 //        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 //        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE);
@@ -170,6 +175,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         int black_color= prefs.getInt("COLOR9", R.color.black);
         int white_color= prefs.getInt("COLOR10", R.color.white);
+
+        getWindow().setNavigationBarColor(getResources().getColor(colorDec1));
+
 
 //
 // circleMenu1 = (CircleMenu) findViewById(R.id.circle_menu1);
@@ -719,6 +727,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.favorite:
+                                elipse.setVisibility(VISIBLE);
+                                elipse1.setVisibility(VISIBLE);
+                                edtext.setVisibility(VISIBLE);
+                                searchmove.setVisibility(VISIBLE);
+                                empty.setVisibility(GONE);
+                                astonaut.setVisibility(GONE);
                                 plus.setVisibility(GONE);
                                 plus1.setVisibility(GONE);
                                 recyclerViewNotes.setVisibility(GONE);
@@ -743,10 +757,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 circleMenu.setVisibility(INVISIBLE);
                                 recyclerViewFavorite.setVisibility(VISIBLE);
 //                                swipe = 0;
+
+                                if (stateAdapter1.getItemCount() == 0) {
+                                    empty1.setVisibility(VISIBLE);
+                                    astonaut1.setVisibility(VISIBLE);
+
+                                } else {
+                                    empty1.setVisibility(GONE);
+                                    astonaut1.setVisibility(GONE);
+                                }
+
                                 viewPager.setCurrentItem(0);
 
                                 break;
                             case R.id.settings:
+                                empty1.setVisibility(GONE);
+                                astonaut1.setVisibility(GONE);
                                 plus1.setVisibility(GONE);
                                 plus.setVisibility(GONE);
                                 edtext.setVisibility(GONE);
@@ -768,9 +794,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //                                swipe = 2;
 
                                 viewPager.setCurrentItem(2);
-
+                                closeKeyboard();
                                 break;
                             case R.id.home:
+                                empty1.setVisibility(GONE);
+                                astonaut1.setVisibility(GONE);
                                 plus1.setVisibility(VISIBLE);
                                 plus.setVisibility(VISIBLE);
                                 recyclerViewFavorite.setVisibility(GONE);
@@ -902,16 +930,18 @@ searchmove.setVisibility(VISIBLE);
         edtext.setHintTextColor(getResources().getColor(colorBack));
         edtext.setTextColor(getResources().getColor(colorBack));
         empty.setTextColor(getResources().getColor(colorText));
+        empty1.setTextColor(getResources().getColor(colorText));
         searchmove.setColorFilter(getResources().getColor(colorBack));
 //        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
 //        }
+        getWindow().setNavigationBarColor(getResources().getColor(colorDec1));
 
         Window window9 = getWindow();
         window9.addFlags(FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window9.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window9.setStatusBarColor(getResources().getColor(colorBack));
-        getWindow().setNavigationBarColor(getResources().getColor(R.color.dark));
+//        getWindow().setNavigationBarColor(getResources().getColor(R.color.dark));
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
 
@@ -1012,7 +1042,6 @@ searchmove.setVisibility(VISIBLE);
 //    }
 
 
-
     private int[][] bottomNavBarStateList = new int[][]{{android.R.attr.state_checked}, {-android.R.attr.state_checked}};
     @Override
     public void onClick(View v) {
@@ -1087,81 +1116,111 @@ searchmove.setVisibility(VISIBLE);
 
     @Override
     public void onClick(Notatka notatka) {
-//        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-//// add a list
-//        String[] first_dialog2 = {"Delete", "Edit", "Add Password"};
-//        builder1.setItems(first_dialog2, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                switch (which) {
-//                    case 0:
-//                        Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
-//                        toast.show();
-//                        App.getInstance().getAppDatabase().modelDao().delete(notatka);
-//
-//                        MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
-//                        delete_pop.start();
-//
-//                        List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
-//                        Collections.reverse(notatkas);
-//                        StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
-//                        stateAdapter.setOnClickToMore(MainActivity.this::onClick);
-//                        recyclerViewNotes.setAdapter(stateAdapter);
-//                        dialog.dismiss();
-//
-//                        break;
-//                    case 1:
-////                        Intent intent = new Intent(MainActivity.this, Note.class);
-////                        MainActivity.this.startActivity(intent);
-//
-//                        Intent intent1 = new Intent(MainActivity.this, Note.class);
-//                        intent1.putExtra("STRING_NOTE" , notatka);
-//
-//                        intent1.putExtra("COLOR_TITLE" , colorTitle1);
-//                        intent1.putExtra("COLOR_DEC" ,colorDec1 );
-//                        MainActivity.this.startActivity(intent1);
-//                        dialog.dismiss();
-//                        break;
-//
-//
-//                    case 2: Intent intent22 = new Intent(MainActivity.this, Passcode_enter.class);
-//                        MainActivity.this.startActivity(intent22);
-//                        dialog.dismiss();
-//
-//                        break;
-
-//                     }
-//            }
-//        });
-
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.dialog1);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
         }
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
         dialog.setCancelable(false); //Optional
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
-
         Button Delete = dialog.findViewById(R.id.delete);
         Button Edit = dialog.findViewById(R.id.edit);
+        Button Cancel = dialog.findViewById(R.id.cancel);
+
+
 
         Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
-                        toast.show();
-                        App.getInstance().getAppDatabase().modelDao().delete(notatka);
 
-                        MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
-                        delete_pop.start();
+                if(notatka.isFavorite()){
+                    dialog.dismiss();
 
-                        List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
-                        Collections.reverse(notatkas);
-                        StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
-                        stateAdapter.setOnClickToMore(MainActivity.this::onClick);
-                        recyclerViewNotes.setAdapter(stateAdapter);
-                        dialog.dismiss();
+                    dialog1 = new Dialog(MainActivity.this);
+                    dialog1.setContentView(R.layout.dialog3);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+
+                    }
+                dialog1.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog1.setCancelable(false); //Optional
+                    dialog1.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+
+                    dialog1.show();
+
+                    Button Yes = dialog1.findViewById(R.id.yes);
+                    Button No = dialog1.findViewById(R.id.no);
+
+                    Yes.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
+                            toast.show();
+                            App.getInstance().getAppDatabase().modelDao().delete(notatka);
+
+                            MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
+                            delete_pop.start();
+
+                            List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
+                            Collections.reverse(notatkas);
+                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
+                            stateAdapter.setOnClickToMore(MainActivity.this::onClick);
+                            recyclerViewNotes.setAdapter(stateAdapter);
+
+                            if (stateAdapter.getItemCount() == 0) {
+                                empty.setVisibility(VISIBLE);
+                                astonaut.setVisibility(VISIBLE);
+
+                            } else {
+                                empty.setVisibility(GONE);
+                                astonaut.setVisibility(GONE);
+                            }
+
+                            dialog1.dismiss();
+                        }
+            });
+                    No.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            dialog1.dismiss();
+                        }
+                    });
+
+                        }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
+                    toast.show();
+                    App.getInstance().getAppDatabase().modelDao().delete(notatka);
+
+                    MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
+                    delete_pop.start();
+
+                    List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
+                    Collections.reverse(notatkas);
+                    StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
+                    stateAdapter.setOnClickToMore(MainActivity.this::onClick);
+                    recyclerViewNotes.setAdapter(stateAdapter);
+
+                    if (stateAdapter.getItemCount() == 0) {
+                        empty.setVisibility(VISIBLE);
+                        astonaut.setVisibility(VISIBLE);
+
+                    } else {
+                        empty.setVisibility(GONE);
+                        astonaut.setVisibility(GONE);
+                    }
+
+                    dialog.dismiss();
+                }
+            }
+        });
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
             }
         });
         Edit.setOnClickListener(new View.OnClickListener() {
