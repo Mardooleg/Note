@@ -768,7 +768,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 }
 
                                 viewPager.setCurrentItem(0);
-
+closeKeyboard();
                                 break;
                             case R.id.settings:
                                 empty1.setVisibility(GONE);
@@ -795,6 +795,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
                                 viewPager.setCurrentItem(2);
                                 closeKeyboard();
+                                closeKeyboard();
+
                                 break;
                             case R.id.home:
                                 empty1.setVisibility(GONE);
@@ -845,6 +847,7 @@ searchmove.setVisibility(VISIBLE);
 //                                    getWindow().getDecorView().setSystemUiVisibility(0);
 ////    black
 //                                }
+                                closeKeyboard();
 
                                 break;
                         }

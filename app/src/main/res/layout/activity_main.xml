@@ -32,9 +32,11 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="20sp"
-        android:text="𝐘𝐨𝐮 𝐝𝐨𝐧'𝐭 𝐡𝐚𝐯𝐞 𝐧𝐨𝐭𝐞𝐬 𝐡𝐞𝐫𝐞"
+        android:text="You don't have notes here"
         android:textColor="@color/dark"
         android:id="@+id/empty"
+        android:theme="@style/Widget.BottomNavigationView"
+
         ></TextView>
     <ImageView
         android:id="@+id/astr"
@@ -49,11 +51,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="𝐘𝐨𝐮 𝐝𝐨𝐧'𝐭 𝐡𝐚𝐯𝐞 𝐟𝐚𝐯𝐨𝐫𝐢𝐭𝐞 𝐡𝐞𝐫𝐞"
+        android:text="You don't have favorite here"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:id="@+id/emptyres"
         android:visibility="gone"
+        android:theme="@style/Widget.BottomNavigationView"
+
 
         ></TextView>
     <ImageView
@@ -72,8 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@color/dark"
-
-        android:text="𝐍𝐨 𝐫𝐞𝐬𝐮𝐥𝐭𝐬 𝐟𝐨𝐮𝐧𝐝"
+        android:theme="@style/Widget.BottomNavigationView"
+        android:text="No results found"
         android:id="@+id/emptyfav"
         android:visibility="gone"
 
@@ -142,7 +146,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottombar" />
+            app:menu="@menu/bottombar"
+            android:theme="@style/Widget.BottomNavigationView"
+            />
 
 
         <ImageView
@@ -177,6 +183,8 @@
             android:padding="10dp"
             android:textSize="19sp"
             android:visibility="visible"
+            android:theme="@style/Widget.BottomNavigationView"
+
             ></EditText>
 
         <TextView
@@ -302,7 +310,10 @@
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:visibility="invisible"></TextView>
+            android:visibility="invisible"
+            android:theme="@style/Widget.BottomNavigationView"
+
+            ></TextView>
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"

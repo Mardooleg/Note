@@ -6,8 +6,8 @@
 
         <TextView
             android:id="@+id/firstnote"
-            android:layout_width="145dp"
-            android:layout_height="105dp"
+            android:layout_width="135dp"
+            android:layout_height="95dp"
 
             android:layout_centerHorizontal="true"
             android:background="@drawable/elipse3"
@@ -24,8 +24,8 @@
 
         <TextView
             android:id="@+id/firsttitle"
-            android:layout_width="145dp"
-            android:layout_height="22dp"
+            android:layout_width="135dp"
+            android:layout_height="20dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:background="@drawable/elipse2"
@@ -45,8 +45,8 @@
 
 
         <ImageView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_alignEnd="@+id/firstnote"
             android:id="@+id/heart"
             android:layout_alignBottom="@+id/firstnote"

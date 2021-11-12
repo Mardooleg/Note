@@ -4,13 +4,13 @@
     <item
         android:id="@+id/favorite"
         android:icon="@drawable/favorite"
-        android:title="𝐅𝐚𝐯𝐨𝐫𝐢𝐭𝐞"
+        android:title="Favorite"
         android:enabled="true"
         />
     <item
         android:id="@+id/home"
         android:icon="@drawable/home"
-        android:title="𝐇𝐨𝐦𝐞"
+        android:title="Home"
         android:enabled="true"
         />
 
@@ -18,7 +18,7 @@
     <item
         android:id="@+id/settings"
         android:icon="@drawable/settings"
-        android:title="𝐒𝐞𝐭𝐭𝐢𝐧𝐠𝐬"
+        android:title="Settings"
       android:enabled="true"
         />
 
