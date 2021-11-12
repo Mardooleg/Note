@@ -23,6 +23,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.shapes.Shape;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -119,8 +120,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     int colorBottom = R.color.greenblue3;
     int colorBack = R.color.white;
     int colorText = R.color.black;
+//    int dialog2 = R.drawable.custom_dialog_background;
 
-
+// Intent i = new Intent(Intent.ACTION_SEND);
+//                i.setType("message/rfc822");
+//                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"oleggevka@gmail.com"});
+//                i.putExtra(Intent.EXTRA_SUBJECT, "Main Idea");
+//                i.putExtra(Intent.EXTRA_TEXT   , "Text");
+//                try {
+//                    startActivity(Intent.createChooser(i, "Send mail..."));
+//                } catch (android.content.ActivityNotFoundException ex) {
+//                }
 
 
 
@@ -892,6 +902,14 @@ searchmove.setVisibility(VISIBLE);
 //
 //    }
 
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//
+//    }
+
+
+
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -1070,9 +1088,13 @@ searchmove.setVisibility(VISIBLE);
                 Intent intent2 = new Intent(this, Note.class);
                 intent2.putExtra("COLOR_TITLE" ,colorTitle1 );
                 intent2.putExtra("COLOR_DEC" ,colorDec1 );
+                intent2.putExtra("COLOR_TEXT" ,colorBottom );
+
                 startActivity(intent2);
                 MediaPlayer ring= MediaPlayer.create(MainActivity.this,R.raw.pop);
                 ring.start();
+
+
                 break;
 
 //            case R.id.item1:
@@ -1122,23 +1144,26 @@ searchmove.setVisibility(VISIBLE);
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.dialog1);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background_black));
+//            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
         }
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+
 //        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
-        dialog.setCancelable(false); //Optional
+//        dialog.getWindow().setBackgroundDrawableResource(getResources().getColor(colorBack));
+    dialog.setCancelable(false); //Optional
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
         Button Delete = dialog.findViewById(R.id.delete);
         Button Edit = dialog.findViewById(R.id.edit);
         Button Cancel = dialog.findViewById(R.id.cancel);
 
 
-
         Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(notatka.isFavorite()){
+                if (notatka.isFavorite()) {
                     dialog.dismiss();
 
                     dialog1 = new Dialog(MainActivity.this);
@@ -1147,7 +1172,7 @@ searchmove.setVisibility(VISIBLE);
                         dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
 
                     }
-                dialog1.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog1.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog1.setCancelable(false); //Optional
                     dialog1.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
@@ -1163,12 +1188,12 @@ searchmove.setVisibility(VISIBLE);
                             toast.show();
                             App.getInstance().getAppDatabase().modelDao().delete(notatka);
 
-                            MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
+                            MediaPlayer delete_pop = MediaPlayer.create(MainActivity.this, R.raw.delete);
                             delete_pop.start();
 
                             List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
                             Collections.reverse(notatkas);
-                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
+                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom, colorBack, colorText);
                             stateAdapter.setOnClickToMore(MainActivity.this::onClick);
                             recyclerViewNotes.setAdapter(stateAdapter);
 
@@ -1183,7 +1208,7 @@ searchmove.setVisibility(VISIBLE);
 
                             dialog1.dismiss();
                         }
-            });
+                    });
                     No.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -1192,17 +1217,17 @@ searchmove.setVisibility(VISIBLE);
                         }
                     });
 
-                        }else{
+                } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
                     toast.show();
                     App.getInstance().getAppDatabase().modelDao().delete(notatka);
 
-                    MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
+                    MediaPlayer delete_pop = MediaPlayer.create(MainActivity.this, R.raw.delete);
                     delete_pop.start();
 
                     List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
                     Collections.reverse(notatkas);
-                    StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
+                    StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1, colorDec1, colorBottom, colorBack, colorText);
                     stateAdapter.setOnClickToMore(MainActivity.this::onClick);
                     recyclerViewNotes.setAdapter(stateAdapter);
 
@@ -1230,16 +1255,17 @@ searchmove.setVisibility(VISIBLE);
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Note.class);
-                        MainActivity.this.startActivity(intent);
+                MainActivity.this.startActivity(intent);
 
-                        Intent intent1 = new Intent(MainActivity.this, Note.class);
-                        intent1.putExtra("STRING_NOTE" , notatka);
+                Intent intent1 = new Intent(MainActivity.this, Note.class);
+                intent1.putExtra("STRING_NOTE", notatka);
 
-                        intent1.putExtra("COLOR_TITLE" , colorTitle1);
-                        intent1.putExtra("COLOR_DEC" ,colorDec1 );
-                        MainActivity.this.startActivity(intent1);
-                        dialog.dismiss();
-                        }});
+                intent1.putExtra("COLOR_TITLE", colorTitle1);
+                intent1.putExtra("COLOR_DEC", colorDec1);
+                MainActivity.this.startActivity(intent1);
+                dialog.dismiss();
+            }
+        });
         dialog.show();
 
     }

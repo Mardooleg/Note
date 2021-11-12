@@ -7,7 +7,7 @@
         <TextView
             android:id="@+id/firstnote"
             android:layout_width="135dp"
-            android:layout_height="95dp"
+            android:layout_height="96dp"
 
             android:layout_centerHorizontal="true"
             android:background="@drawable/elipse3"
@@ -15,6 +15,7 @@
             android:textColor="#343434"
             android:textSize="15sp"
             android:layout_marginTop="25dp"
+            android:theme="@style/Widget.BottomNavigationView"
 
             android:paddingLeft="8dp"
             android:paddingTop="22dp"
@@ -25,12 +26,13 @@
         <TextView
             android:id="@+id/firsttitle"
             android:layout_width="135dp"
-            android:layout_height="20dp"
+            android:layout_height="25dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:background="@drawable/elipse2"
             android:text="Title"
             android:textStyle="bold"
+            android:theme="@style/Widget.BottomNavigationView"
 
             android:textColor="@color/dark"
             android:textSize="15sp"

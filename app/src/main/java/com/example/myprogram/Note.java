@@ -48,6 +48,7 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
     final int DIALOG = 1;
 
     Dialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,6 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
 //        editor.putString("name", "Elena");
 //        editor.putInt("idName", 12);
 //        editor.apply();
-
 
 
         Window window = getWindow();
@@ -106,6 +106,163 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
             note.setText(notatka.getNote());
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (TextUtils.isEmpty(note.getText().toString()) && TextUtils.isEmpty(title.getText().toString())) {
+            App.getInstance().getAppDatabase().modelDao().delete(notatka);
+            Intent intent1 = new Intent(Note.this, MainActivity.class);
+            Note.this.startActivity(intent1);
+
+        }else if (getIntent().getParcelableExtra("STRING_NOTE") != null) {
+            notatka.setTitle(title.getText().toString());
+            notatka.setNote(note.getText().toString());
+
+            App.getInstance().getAppDatabase().modelDao().update(notatka);
+            Intent intent = new Intent(Note.this, MainActivity.class);
+            Note.this.startActivity(intent);
+
+        } else if (notatka != null) {
+            Intent intent = new Intent(Note.this, MainActivity.class);
+            Note.this.startActivity(intent);
+            App.getInstance().getAppDatabase().modelDao().save(new Notatka(title.getText().toString(), note.getText().toString(), false, false));
+
+
+        } else {
+            Intent intent = new Intent(Note.this, MainActivity.class);
+            Note.this.startActivity(intent);
+            App.getInstance().getAppDatabase().modelDao().save(new Notatka(title.getText().toString(), note.getText().toString(), false, false));
+        }
+        super.onBackPressed();
+    }
+
+
+//     dialog = new Dialog(MainActivity.this);
+//        dialog.setContentView(R.layout.dialog1);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+//        }
+//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+////        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+//        dialog.setCancelable(false); //Optional
+//        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+//        Button Delete = dialog.findViewById(R.id.delete);
+//        Button Edit = dialog.findViewById(R.id.edit);
+//        Button Cancel = dialog.findViewById(R.id.cancel);
+//
+//
+//
+//        Delete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                if(notatka.isFavorite()){
+//                    dialog.dismiss();
+//
+//                    dialog1 = new Dialog(MainActivity.this);
+//                    dialog1.setContentView(R.layout.dialog3);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+//
+//                    }
+//                dialog1.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                    dialog1.setCancelable(false); //Optional
+//                    dialog1.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+//
+//                    dialog1.show();
+//
+//                    Button Yes = dialog1.findViewById(R.id.yes);
+//                    Button No = dialog1.findViewById(R.id.no);
+//
+//                    Yes.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
+//                            toast.show();
+//                            App.getInstance().getAppDatabase().modelDao().delete(notatka);
+//
+//                            MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
+//                            delete_pop.start();
+//
+//                            List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
+//                            Collections.reverse(notatkas);
+//                            StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
+//                            stateAdapter.setOnClickToMore(MainActivity.this::onClick);
+//                            recyclerViewNotes.setAdapter(stateAdapter);
+//
+//                            if (stateAdapter.getItemCount() == 0) {
+//                                empty.setVisibility(VISIBLE);
+//                                astonaut.setVisibility(VISIBLE);
+//
+//                            } else {
+//                                empty.setVisibility(GONE);
+//                                astonaut.setVisibility(GONE);
+//                            }
+//
+//                            dialog1.dismiss();
+//                        }
+//            });
+//                    No.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                            dialog1.dismiss();
+//                        }
+//                    });
+//
+//                        }else{
+//                    Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
+//                    toast.show();
+//                    App.getInstance().getAppDatabase().modelDao().delete(notatka);
+//
+//                    MediaPlayer delete_pop= MediaPlayer.create(MainActivity.this, R.raw.delete);
+//                    delete_pop.start();
+//
+//                    List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll(edtext.getText().toString());
+//                    Collections.reverse(notatkas);
+//                    StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
+//                    stateAdapter.setOnClickToMore(MainActivity.this::onClick);
+//                    recyclerViewNotes.setAdapter(stateAdapter);
+//
+//                    if (stateAdapter.getItemCount() == 0) {
+//                        empty.setVisibility(VISIBLE);
+//                        astonaut.setVisibility(VISIBLE);
+//
+//                    } else {
+//                        empty.setVisibility(GONE);
+//                        astonaut.setVisibility(GONE);
+//                    }
+//
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//        Cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//
+//            }
+//        });
+//        Edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, Note.class);
+//                        MainActivity.this.startActivity(intent);
+//
+//                        Intent intent1 = new Intent(MainActivity.this, Note.class);
+//                        intent1.putExtra("STRING_NOTE" , notatka);
+//
+//                        intent1.putExtra("COLOR_TITLE" , colorTitle1);
+//                        intent1.putExtra("COLOR_DEC" ,colorDec1 );
+//                        MainActivity.this.startActivity(intent1);
+//                        dialog.dismiss();
+//                        }});
+//        dialog.show();
+
+
+
+
 
     @Override
     protected Dialog onCreateDialog(int id) {
