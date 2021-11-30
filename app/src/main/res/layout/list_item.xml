@@ -4,44 +4,50 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
         <TextView
             android:id="@+id/firstnote"
             android:layout_width="135dp"
-            android:layout_height="96dp"
-
-            android:layout_centerHorizontal="true"
+            android:layout_height="90dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/elipse3"
+            android:maxLength="36"
+            android:paddingLeft="7dp"
+            android:paddingRight="5dp"
+            android:paddingTop="24dp"
             android:text="Bla bla   "
-            android:textColor="#343434"
-            android:textSize="15sp"
-            android:layout_marginTop="25dp"
-            android:theme="@style/Widget.BottomNavigationView"
-
-            android:paddingLeft="8dp"
-            android:paddingTop="22dp"
-            android:visibility="visible"
-            ></TextView>
-
+            android:textColor="@color/dark"
+            android:textSize="15.5sp"
+            android:visibility="visible"></TextView>
 
         <TextView
             android:id="@+id/firsttitle"
-            android:layout_width="135dp"
-            android:layout_height="25dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/firstnote"
+            android:layout_alignEnd="@+id/firstnote"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1"
             android:background="@drawable/elipse2"
+            android:ellipsize="none"
+            android:maxLines="100"
+            android:paddingLeft="7dp"
+            android:paddingTop="1.7dp"
+            android:paddingRight="5dp"
             android:text="Title"
-            android:textStyle="bold"
-            android:theme="@style/Widget.BottomNavigationView"
-
             android:textColor="@color/dark"
             android:textSize="15sp"
-            android:paddingTop="1.7dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="1dp"
-
+            android:textStyle="bold"
+            android:theme="@style/Widget.BottomNavigationView"
             android:visibility="visible"
-
+            android:maxLength="14"
             ></TextView>
 
 

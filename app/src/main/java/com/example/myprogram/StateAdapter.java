@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.IconCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
         int colorTitle = R.drawable.elipse2;
         int colorDec = R.drawable.elipse3;
          int colorBack = R.drawable.elipse3;
-    int colotText = R.color.black;
+    int colorText = R.color.black;
 
 
         int colorTitle1 = R.color.greenblue1;
@@ -70,7 +71,8 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
             this.colorDec1 = colorDec1;
             this.colorBottom = colorBottom;
             this.colorBack = colorBack;
-            this.colotText = colotText;
+            this.colorText = colorText;
+
 
         }
 
@@ -98,8 +100,19 @@ public class StateAdapter  extends RecyclerView.Adapter<StateAdapter.ViewHolder>
             }
             holder.firsttitle.setText(notatka.getTitle());
             holder.firsttitle.setBackground(ContextCompat.getDrawable(holder.firstnote.getContext(), colorTitle));
+
+            holder.firsttitle.setTextColor(ContextCompat.getColor(holder.firsttitle.getContext(), colorBack));
+            holder.firstnote.setTextColor(ContextCompat.getColor(holder.firstnote.getContext(), colorBack));
+
+
             holder.firstnote.setText(notatka.getNote());
             holder.firstnote.setBackground(ContextCompat.getDrawable(holder.firstnote.getContext(), colorDec));
+
+
+//            holder.firsttitle.getIntent().getIntExtra("COLOR_TITLE", R.color.greenblue1);
+//            colorTitle1 = getIntent().getIntExtra("COLOR_DEC", R.color.greenblue2);
+
+
             holder.firstnote.setOnClickListener(new DoubleClickListener() {
                 @Override
                 public void onDoubleClick() {

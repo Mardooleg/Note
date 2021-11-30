@@ -93,9 +93,9 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
         window1.setStatusBarColor(getResources().getColor(colorDec1));
         background2.setBackgroundColor(getResources().getColor(colorDec1));
         title.setHintTextColor(getResources().getColor(colorTitle1));
-        title.setTextColor(getResources().getColor(colorTitle1));
+//        title.setTextColor(getResources().getColor(colorTitle1));
         note.setHintTextColor(getResources().getColor(colorTitle1));
-        note.setTextColor(getResources().getColor(colorTitle1));
+//        note.setTextColor(getResources().getColor(colorTitle1));
         delete.setColorFilter(getResources().getColor(colorTitle1));
         tick.setColorFilter(getResources().getColor(colorTitle1));
         back.setColorFilter(getResources().getColor(colorTitle1));
@@ -107,6 +107,28 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+//    @Override
+//    public void onDestroy() {
+////    super.onDestroy();
+////    getWindow().removeView(mYourOverlayView);
+////    mHardwareKeyWatcher.stopWatch();
+//        if (TextUtils.isEmpty(note.getText().toString()) && TextUtils.isEmpty(title.getText().toString())) {
+//            App.getInstance().getAppDatabase().modelDao().delete(notatka);
+//            Intent intent1 = new Intent(Note.this, MainActivity.class);
+//            Note.this.startActivity(intent1);
+//
+//        }else if (getIntent().getParcelableExtra("STRING_NOTE") != null) {
+//            notatka.setTitle(title.getText().toString());
+//            notatka.setNote(note.getText().toString());
+//
+//            App.getInstance().getAppDatabase().modelDao().update(notatka);
+//            Intent intent = new Intent(Note.this, MainActivity.class);
+//            Note.this.startActivity(intent);
+//
+//        }
+//    super.onDestroy();
+//
+//    }
     @Override
     public void onBackPressed() {
         if (TextUtils.isEmpty(note.getText().toString()) && TextUtils.isEmpty(title.getText().toString())) {

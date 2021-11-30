@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Delete;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
@@ -29,7 +32,10 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.style.BackgroundColorSpan;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,6 +50,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     boolean stateDarkMode = false;
         private AppCompatEditText acetStatus;
     private ListPopupWindow statusPopupList;
-    private Dialog dialog;
+    private Dialog dialog, dialog2;
     private Dialog dialog1;
+    private Layout list_item;
 
     private Button ShowDialog;
 
@@ -83,10 +91,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     TextView empty1;
     TextView background;
     TextView litback;
+    TextView textNote;
+    TextView textTitle;
+
     TextView title;
     TextView note;
     CircleMenu circleMenu;
     CircleMenu circleMenu1;
+
+//    TextView back_dialog;
 
     ImageView plus;
     ImageView search;
@@ -102,11 +115,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //    ImageView item4;
 //    ImageView item5;
 //    ImageView item6;
-    ImageView elipse;
+//    ImageView elipse;
     ImageView elipse1;
-
+//
     EditText edtext;
 //    EditText acetStatus;
+    Button delete_btn;
 
 
     final String LOG_TAG = "myLogs";
@@ -120,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     int colorBottom = R.color.greenblue3;
     int colorBack = R.color.white;
     int colorText = R.color.black;
+     boolean grid;
+
 //    int dialog2 = R.drawable.custom_dialog_background;
 
 // Intent i = new Intent(Intent.ACTION_SEND);
@@ -148,8 +164,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+//        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.dark));
 
 //        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 //        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_IMMERSIVE);
@@ -167,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_FULLSCREEN);
 
-// Hide the status bar.
+// Hide the status bar. 
 
 //        this.gestureDetector = new GestureDetector (MainActivity.this, this);
 
@@ -182,12 +202,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int color6 = prefs.getInt("COLOR6", R.color.greenblue3); //0 is the default value.
         int color7 = prefs.getInt("COLOR7", R.color.white); //0 is the default value.
         int color8 = prefs.getInt("COLOR8", R.color.black); //0 is the default value.
-
+        boolean nav_stat = false;
+        
         int black_color= prefs.getInt("COLOR9", R.color.black);
         int white_color= prefs.getInt("COLOR10", R.color.white);
 
         getWindow().setNavigationBarColor(getResources().getColor(colorDec1));
 
+        int viewColor=getResources().getColor(color7);
+        if(viewColor==getResources().getColor(R.color.white)){
+//            Toast.makeText(getApplicationContext(), "White",  Toast.LENGTH_SHORT).show();
+            nav_stat = true;
+        }else if (viewColor==getResources().getColor(R.color.dark)){
+//            Toast.makeText(getApplicationContext(), "Black",  Toast.LENGTH_SHORT).show();
+            nav_stat = false;
+        }
+        if(nav_stat == true){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        }else{
+            getWindow().getDecorView().setSystemUiVisibility(0);
+
+        }
 
 //
 // circleMenu1 = (CircleMenu) findViewById(R.id.circle_menu1);
@@ -243,6 +279,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         circleMenu.addSubMenu(Color.parseColor("#9c27b0"), (Bitmap) null);
         circleMenu.addSubMenu(Color.parseColor("#ff6f00"), (Bitmap) null);
         circleMenu.addSubMenu(Color.parseColor("#d50000"), (Bitmap) null);
+//        circleMenu.addSubMenu(Color.parseColor("#EFD700"), (Bitmap) null);
+//        Intent intent9;
+//        intent9 = new Intent( null , Dialog2.class);
+//        intent9.putExtra("COLOR_TEXT", colorText);
+//        intent9.putExtra("COLOR_BACK", colorBack);
+
+//        startActivity(intent9);
+
         circleMenu.setOnMenuSelectedListener(new OnMenuSelectedListener() {
             @Override
             public void onMenuSelected(int index) {
@@ -250,27 +294,42 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                     case 0:
                         dialog = new Dialog(MainActivity.this);
                         dialog.setContentView(R.layout.dialog2);
+
+
+
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
-                        }
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        }                            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false); //Optional
                         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
                         Button Okay = dialog.findViewById(R.id.btn_okay);
                         Button Cancel = dialog.findViewById(R.id.btn_cancel);
+                        TextView textView2 = dialog.findViewById(R.id.textView2);
+
+
+                        TextView Back = dialog.findViewById(R.id.back);
+
+                        Back.setBackgroundColor(getResources().getColor(colorBack));
+                        Okay.setTextColor(getResources().getColor(colorText));
+                        Cancel.setTextColor(getResources().getColor(colorText));
+                        textView2.setTextColor(getResources().getColor(colorText));
+
+                        ImageView imageView1 = dialog.findViewById(R.id.imageView);
+                        ImageView imageView2 = dialog.findViewById(R.id.imageView2);
+                        imageView1.setColorFilter(getResources().getColor(colorText));
+                        imageView2.setColorFilter(getResources().getColor(colorText));
+
+//                        imageView2.setColorFilter(getResources().getColor(colorText));
 
                         Okay.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.white, R.color.color_blind2, R.color.color_blind3, R.color.white, R.color.dark);
-                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//                statusbar = 1;
+                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.white, R.color.color_blind2, R.color.color_blind3, R.color.white, R.color.dark, true);
 
 
-
-                                    dialog.dismiss();
-
+                                dialog.dismiss();
 
 
                             }
@@ -278,11 +337,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.white, R.color.color_blind2, R.color.color_blind3,  R.color.dark, R.color.white);
-                                        getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.white, R.color.color_blind2, R.color.color_blind3, R.color.dark, R.color.white, false);
+                                getWindow().getDecorView().setSystemUiVisibility(0);
 //                                        statusbar = 0;
 
-                                dialog.dismiss(); }});
+                                dialog.dismiss();
+                            }
+                        });
                         dialog.show();
 
                         break;
@@ -290,20 +351,33 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         dialog = new Dialog(MainActivity.this);
                         dialog.setContentView(R.layout.dialog2);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
-                        }
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        }                            dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false); //Optional
                         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
                         Button Okay1 = dialog.findViewById(R.id.btn_okay);
                         Button Cancel1 = dialog.findViewById(R.id.btn_cancel);
 
+                        TextView textView3 = dialog.findViewById(R.id.textView2);
+
+                        TextView Back1 = dialog.findViewById(R.id.back);
+
+                        Back1.setBackgroundColor(getResources().getColor(colorBack));
+                        Okay1.setTextColor(getResources().getColor(colorText));
+                        Cancel1.setTextColor(getResources().getColor(colorText));
+                        textView3.setTextColor(getResources().getColor(colorText));
+
+                        ImageView imageView3 = dialog.findViewById(R.id.imageView);
+                        ImageView imageView4 = dialog.findViewById(R.id.imageView2);
+                        imageView3.setColorFilter(getResources().getColor(colorText));
+                        imageView4.setColorFilter(getResources().getColor(colorText));
+
                         Okay1.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_blue, R.drawable.elipse2_blue, R.drawable.elipse3_blue, R.color.blue2, R.color.blue1, R.color.blue3, R.color.white, R.color.dark);
-                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                                colorStyle(R.drawable.favorite_blue, R.drawable.elipse2_blue, R.drawable.elipse3_blue, R.color.blue2, R.color.blue1, R.color.blue3, R.color.white, R.color.dark, true);
 //                                statusbar = 1;
                                 dialog.dismiss();
                             }
@@ -311,10 +385,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel1.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_blue, R.drawable.elipse2_blue, R.drawable.elipse3_blue, R.color.blue2, R.color.blue1, R.color.blue3,  R.color.dark, R.color.white);
-                                getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_blue, R.drawable.elipse2_blue, R.drawable.elipse3_blue, R.color.blue2, R.color.blue1, R.color.blue3, R.color.dark, R.color.white, false);
 //                                statusbar = 0;
-                                dialog.dismiss(); }});
+                                dialog.dismiss();
+                            }
+                        });
                         dialog.show();
                         break;
                     case 2:
@@ -323,18 +398,33 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
                         }
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false); //Optional
                         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
                         Button Okay2 = dialog.findViewById(R.id.btn_okay);
                         Button Cancel2 = dialog.findViewById(R.id.btn_cancel);
 
+                        TextView textView13 = dialog.findViewById(R.id.textView2);
+
+                        TextView Back6 = dialog.findViewById(R.id.back);
+
+                        Back6.setBackgroundColor(getResources().getColor(colorBack));
+                        Okay2.setTextColor(getResources().getColor(colorText));
+                        Cancel2.setTextColor(getResources().getColor(colorText));
+                        textView13.setTextColor(getResources().getColor(colorText));
+
+
+                        ImageView imageView5 = dialog.findViewById(R.id.imageView);
+                        ImageView imageView6 = dialog.findViewById(R.id.imageView2);
+                        imageView5.setColorFilter(getResources().getColor(colorText));
+                        imageView6.setColorFilter(getResources().getColor(colorText));
+
                         Okay2.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_green, R.drawable.elipse2_green, R.drawable.elipse3_green, R.color.green2, R.color.green1, R.color.green3,  R.color.white, R.color.dark);
-                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                                colorStyle(R.drawable.favorite_green, R.drawable.elipse2_green, R.drawable.elipse3_green, R.color.green2, R.color.green1, R.color.green3, R.color.white, R.color.dark, true);
+//                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //                                statusbar = 1;
 
                                 dialog.dismiss();
@@ -343,11 +433,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel2.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_green, R.drawable.elipse2_green, R.drawable.elipse3_green, R.color.green2, R.color.green1, R.color.green3, R.color.dark, R.color.white);
-                                getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_green, R.drawable.elipse2_green, R.drawable.elipse3_green, R.color.green2, R.color.green1, R.color.green3, R.color.dark, R.color.white, false);
+//                                getWindow().getDecorView().setSystemUiVisibility(0);
 //                                statusbar = 0;
 
-                                dialog.dismiss(); }});
+                                dialog.dismiss();
+                            }
+                        });
                         dialog.show();
                         break;
                     case 3:
@@ -356,18 +448,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
                         }
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false); //Optional
                         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
                         Button Okay3 = dialog.findViewById(R.id.btn_okay);
                         Button Cancel3 = dialog.findViewById(R.id.btn_cancel);
 
+                        TextView textView5 = dialog.findViewById(R.id.textView2);
+
+                        TextView Back2 = dialog.findViewById(R.id.back);
+
+                        Back2.setBackgroundColor(getResources().getColor(colorBack));
+                        Okay3.setTextColor(getResources().getColor(colorText));
+                        Cancel3.setTextColor(getResources().getColor(colorText));
+                        textView5.setTextColor(getResources().getColor(colorText));
+
+                        ImageView imageView7 = dialog.findViewById(R.id.imageView);
+                        ImageView imageView8 = dialog.findViewById(R.id.imageView2);
+                        imageView7.setColorFilter(getResources().getColor(colorText));
+                        imageView8.setColorFilter(getResources().getColor(colorText));
+
                         Okay3.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_greenblue, R.drawable.elipse2_greenblue, R.drawable.elipse3, R.color.greenblue2, R.color.greenblue1, R.color.greenblue3, R.color.white, R.color.dark);
-                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                                colorStyle(R.drawable.favorite_greenblue, R.drawable.elipse2_greenblue, R.drawable.elipse3, R.color.greenblue2, R.color.greenblue1, R.color.greenblue3, R.color.white, R.color.dark, true);
+//                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //                                statusbar = 1;
 
                                 dialog.dismiss();
@@ -376,11 +482,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel3.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_greenblue, R.drawable.elipse2_greenblue, R.drawable.elipse3, R.color.greenblue2, R.color.greenblue1, R.color.greenblue3, R.color.dark, R.color.white);
-                                getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_greenblue, R.drawable.elipse2_greenblue, R.drawable.elipse3, R.color.greenblue2, R.color.greenblue1, R.color.greenblue3, R.color.dark, R.color.white, false);
+//                                getWindow().getDecorView().setSystemUiVisibility(0);
 //                                statusbar = 0;
 
-                                dialog.dismiss(); }});
+                                dialog.dismiss();
+                            }
+                        });
                         dialog.show();
                         break;
                     case 4:
@@ -389,18 +497,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
                         }
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false); //Optional
                         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
                         Button Okay4 = dialog.findViewById(R.id.btn_okay);
                         Button Cancel4 = dialog.findViewById(R.id.btn_cancel);
 
+                        TextView textView7 = dialog.findViewById(R.id.textView2);
+
+                        TextView Back3 = dialog.findViewById(R.id.back);
+
+                        Back3.setBackgroundColor(getResources().getColor(colorBack));
+                        Okay4.setTextColor(getResources().getColor(colorText));
+                        Cancel4.setTextColor(getResources().getColor(colorText));
+                        textView7.setTextColor(getResources().getColor(colorText));
+
+                        ImageView imageView9 = dialog.findViewById(R.id.imageView);
+                        ImageView imageView10 = dialog.findViewById(R.id.imageView2);
+                        imageView9.setColorFilter(getResources().getColor(colorText));
+                        imageView10.setColorFilter(getResources().getColor(colorText));
+
                         Okay4.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                        colorStyle(R.drawable.favorite_purple, R.drawable.elipse2_purple, R.drawable.elipse3_purple, R.color.purple2, R.color.purple1, R.color.purple3, R.color.white, R.color.dark);
-                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                                colorStyle(R.drawable.favorite_purple, R.drawable.elipse2_purple, R.drawable.elipse3_purple, R.color.purple2, R.color.purple1, R.color.purple3, R.color.white, R.color.dark, true);
+//                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //                                statusbar = 1;
 
                                 dialog.dismiss();
@@ -409,28 +531,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel4.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                        colorStyle(R.drawable.favorite_purple, R.drawable.elipse2_purple, R.drawable.elipse3_purple, R.color.purple2, R.color.purple1, R.color.purple3, R.color.dark, R.color.white);
-                                getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_purple, R.drawable.elipse2_purple, R.drawable.elipse3_purple, R.color.purple2, R.color.purple1, R.color.purple3, R.color.dark, R.color.white, false);
+//                                getWindow().getDecorView().setSystemUiVisibility(0);
 //                                statusbar = 0;
 
-                                dialog.dismiss(); }});
-                        dialog.show();
-//                        colorStyle(R.drawable.favorite_purple, R.drawable.elipse2_purple, R.drawable.elipse3_purple, R.color.purple2, R.color.purple1, R.color.purple3, color7, color8);
-//                        AlertDialog.Builder builder5 = new AlertDialog.Builder(MainActivity.this);
-//                        ViewGroup viewGroup5 = findViewById(android.R.id.content);
-//                        builder5.setTitle("Which main theme do you want yo use?");
-//                        AlertDialog alertDialog5 = builder5.
-//                                setNegativeButton("White", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        colorStyle(R.drawable.favorite_purple, R.drawable.elipse2_purple, R.drawable.elipse3_purple, R.color.purple2, R.color.purple1, R.color.purple3, R.color.white, R.color.dark);
-//                                    }}).
-//                                setPositiveButton("Black", new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog, int which) {
-//                                        colorStyle(R.drawable.favorite_purple, R.drawable.elipse2_purple, R.drawable.elipse3_purple, R.color.purple2, R.color.purple1, R.color.purple3, R.color.dark, R.color.white);
-//                                    }}).create();
-//                        alertDialog5.show();
+                                dialog.dismiss();
+                            }
+                        });dialog.show();
                         break;
                     case 5:
                         dialog = new Dialog(MainActivity.this);
@@ -438,18 +545,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
                         }
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false); //Optional
                         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
                         Button Okay5 = dialog.findViewById(R.id.btn_okay);
                         Button Cancel5 = dialog.findViewById(R.id.btn_cancel);
 
+                        TextView textView9 = dialog.findViewById(R.id.textView2);
+
+                        TextView Back4 = dialog.findViewById(R.id.back);
+
+                        Back4.setBackgroundColor(getResources().getColor(colorBack));
+                        Okay5.setTextColor(getResources().getColor(colorText));
+                        Cancel5.setTextColor(getResources().getColor(colorText));
+                        textView9.setTextColor(getResources().getColor(colorText));
+
+                        ImageView imageView11 = dialog.findViewById(R.id.imageView);
+                        ImageView imageView12 = dialog.findViewById(R.id.imageView2);
+                        imageView11.setColorFilter(getResources().getColor(colorText));
+                        imageView12.setColorFilter(getResources().getColor(colorText));
+
                         Okay5.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                        colorStyle(R.drawable.favorite_orange, R.drawable.elipse2_orange, R.drawable.elipse3_orange, R.color.orange2, R.color.orange1, R.color.orange3,  R.color.white, R.color.dark);// Метод
-                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                                colorStyle(R.drawable.favorite_orange, R.drawable.elipse2_orange, R.drawable.elipse3_orange, R.color.orange2, R.color.orange1, R.color.orange3, R.color.white, R.color.dark, true);// Метод
+//                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //                                statusbar = 1;
 
                                 dialog.dismiss();
@@ -458,11 +579,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel5.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                        colorStyle(R.drawable.favorite_orange, R.drawable.elipse2_orange, R.drawable.elipse3_orange, R.color.orange2, R.color.orange1, R.color.orange3, R.color.dark, R.color.white);// Метод
-                                getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_orange, R.drawable.elipse2_orange, R.drawable.elipse3_orange, R.color.orange2, R.color.orange1, R.color.orange3, R.color.dark, R.color.white, false);// Метод
+//                                getWindow().getDecorView().setSystemUiVisibility(0);
 //                                statusbar = 0;
 
-                                dialog.dismiss(); }});
+                                dialog.dismiss();
+                            }
+                        });
                         dialog.show();
                         break;
                     case 6:
@@ -471,18 +594,32 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
                         }
-                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         dialog.setCancelable(false); //Optional
                         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
                         Button Okay6 = dialog.findViewById(R.id.btn_okay);
                         Button Cancel6 = dialog.findViewById(R.id.btn_cancel);
 
+                        TextView textView11 = dialog.findViewById(R.id.textView2);
+
+                        TextView Back5 = dialog.findViewById(R.id.back);
+
+                        Back5.setBackgroundColor(getResources().getColor(colorBack));
+                        Okay6.setTextColor(getResources().getColor(colorText));
+                        Cancel6.setTextColor(getResources().getColor(colorText));
+                        textView11.setTextColor(getResources().getColor(colorText));
+
+                        ImageView imageView13 = dialog.findViewById(R.id.imageView);
+                        ImageView imageView14 = dialog.findViewById(R.id.imageView2);
+                        imageView13.setColorFilter(getResources().getColor(colorText));
+                        imageView14.setColorFilter(getResources().getColor(colorText));
+
                         Okay6.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                        colorStyle(R.drawable.favorite_red, R.drawable.elipse2_red, R.drawable.elipse3_red, R.color.red2, R.color.red1, R.color.red3,R.color.white, R.color.dark);
-                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                                colorStyle(R.drawable.favorite_red, R.drawable.elipse2_red, R.drawable.elipse3_red, R.color.red2, R.color.red1, R.color.red3, R.color.white, R.color.dark, true);
+//                                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //                                statusbar = 1;
 
                                 dialog.dismiss();
@@ -491,18 +628,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel6.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                        colorStyle(R.drawable.favorite_red, R.drawable.elipse2_red, R.drawable.elipse3_red, R.color.red2, R.color.red1, R.color.red3,  R.color.dark, R.color.white);
-                                getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_red, R.drawable.elipse2_red, R.drawable.elipse3_red, R.color.red2, R.color.red1, R.color.red3, R.color.dark, R.color.white, false);
+//                                getWindow().getDecorView().setSystemUiVisibility(0);
 //                                statusbar = 0;
 
-                                dialog.dismiss(); }});
+                                dialog.dismiss();
+                            }
+                        });
                         dialog.show();
                         break;
+
                 }
 
             }
-        });
-        circleMenu.setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
+        }).setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
 
 
             @Override
@@ -515,41 +654,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         });
 
-        circleMenu1 = (CircleMenu) findViewById(R.id.circle_menu1);
-
-
-        circleMenu1.setMainMenu(Color.parseColor("#ababab"), R.drawable.ic__763404491553666161, R.drawable.ic__2462973021557749687);
-        circleMenu1.addSubMenu(Color.parseColor("#cccccc"), (Bitmap) null);
-        circleMenu1.addSubMenu(Color.parseColor("#005ecb"), (Bitmap) null);
-        circleMenu1.setOnMenuSelectedListener(new OnMenuSelectedListener() {
-            @Override
-            public void onMenuSelected(int index) {
-                switch (index) {
-                    case 0:
-//                        colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.white, R.color.color_blind2, R.color.color_blind3, color7, color8);
-
-                        break;
-                    case 1:
-//                        colorStyle(R.drawable.favorite_blue, R.drawable.elipse2_blue, R.drawable.elipse3_blue, R.color.blue2, R.color.blue1, R.color.blue3, color7, color8);
-
-                        break;
-
-                }
-
-            }
-        });
-        circleMenu.setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
-
-
-            @Override
-            public void onMenuOpened() {
-            }
-
-            @Override
-            public void onMenuClosed() {
-            }
-
-        });
 
 //        getWindow().getDecorView().setSystemUiVisibility(SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
 //        Window window1 = getWindow();
@@ -561,7 +665,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAll("");
         Collections.reverse(notatkas);
-        StateAdapter stateAdapter = new StateAdapter(this, notatkas, color1, color2, color3, color4,  color5, color6, color7, color8);
+        StateAdapter stateAdapter = new StateAdapter(this, notatkas, color1, color2, color3, color4,  color5, color6, color7, color8 );
         stateAdapter.setOnClickToMore(this);
 
 
@@ -573,7 +677,38 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         recyclerViewNotes.setAdapter(stateAdapter);
         recyclerViewNotes.setLayoutManager(new GridLayoutManager(this, 2));
 
+        circleMenu1 = (CircleMenu) findViewById(R.id.circle_menu1);
 
+        circleMenu1.setMainMenu(Color.parseColor("#ababab"), R.drawable.ic__763404491553666161, R.drawable.ic__2462973021557749687);
+        circleMenu1.addSubMenu(Color.parseColor("#cccccc"), R.drawable.ic__763404491553666161);
+        circleMenu1.addSubMenu(Color.parseColor("#005ecb"), R.drawable.ic__763404491553666161);
+        circleMenu1.setOnMenuSelectedListener(new OnMenuSelectedListener() {
+            @Override
+            public void onMenuSelected(int index) {
+                switch (index) {
+                    case 0:
+//                        recyclerViewNotes.setLayoutManager(new GridLayoutManager(null , 2));
+
+                   break;
+                    case 1:
+//                        recyclerViewNotes.setLayoutManager(new GridLayoutManager(null , 1));
+//                        grid = false;
+                        break;
+                }
+            }
+        });
+        circleMenu.setOnMenuStatusChangeListener(new OnMenuStatusChangeListener() {
+
+
+            @Override
+            public void onMenuOpened() {
+            }
+
+            @Override
+            public void onMenuClosed() {
+            }
+
+        });
 
         litback = findViewById(R.id.litback);
         recyclerViewFavorite = findViewById(R.id.fv);
@@ -590,6 +725,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         title = findViewById(R.id.firsttitle);
         note = findViewById(R.id.firstnote);
         plus = findViewById(R.id.plus);
+
+        delete_btn = findViewById(R.id.delete_btn);
+//back_dialog = findViewById(R.id.back_dialog);
 
 //        acetStatus = findViewById(R.id.acet_status);
 //        EditText acet_status = findViewById(R.id.acet_status);
@@ -618,6 +756,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //        item6 = findViewById(R.id.item6);
 //        ImageView item6 = findViewById(R.id.item6);
 //        item6.setOnClickListener(this);
+
+//        if(ContextCompat.getColor(this, getResources().getColor(background))== R.color.white);{
 
 
         plus1 = findViewById(R.id.plus1);
@@ -663,6 +803,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                     StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas,  colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
                     stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
                     recyclerViewFavorite.setAdapter(stateAdapter1);
+
+                }else{
+//                                Toast.makeText(getApplicationContext(), "Black",  Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -716,7 +859,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         searchmove = findViewById(R.id.searchmove);
         ImageView searchmove = findViewById(R.id.searchmove);
         searchmove.setOnClickListener(this);
-        elipse = findViewById(R.id.elipse);
+//        elipse = findViewById(R.id.elipse);
         elipse4 = findViewById(R.id.elipse4);
         elipse1 = findViewById(R.id.elipse1);
 
@@ -737,10 +880,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.favorite:
-                                elipse.setVisibility(VISIBLE);
+//                                elipse.setVisibility(VISIBLE);
                                 elipse1.setVisibility(VISIBLE);
                                 edtext.setVisibility(VISIBLE);
-                                searchmove.setVisibility(VISIBLE);
+//                                searchmove.setVisibility(VISIBLE);
                                 empty.setVisibility(GONE);
                                 astonaut.setVisibility(GONE);
                                 plus.setVisibility(GONE);
@@ -755,7 +898,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //                                acet_status.setVisibility(INVISIBLE);
                                 recyclerViewFavorite.setAdapter(stateAdapter1);
                                 recyclerViewFavorite.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
-                                searchmove.setVisibility(VISIBLE);
+//                                searchmove.setVisibility(VISIBLE);
+                                circleMenu1.setVisibility(INVISIBLE);
 
 //                                item1.setVisibility(INVISIBLE);
 //                                item2.setVisibility(INVISIBLE);
@@ -790,7 +934,7 @@ closeKeyboard();
                                 recyclerViewFavorite.setVisibility(GONE);
                                 recyclerViewNotes.setVisibility(GONE);
 
-                                elipse.setVisibility(GONE);
+//                                elipse.setVisibility(GONE);
                                 elipse1.setVisibility(GONE);
                                 searchmove.setVisibility(INVISIBLE);
 //                                search.setVisibility(GONE);
@@ -800,6 +944,9 @@ closeKeyboard();
                                 empty.setVisibility(GONE);
 
                                 circleMenu.setVisibility(VISIBLE);
+                                circleMenu.setVisibility(VISIBLE);
+//                                circleMenu1.setVisibility(VISIBLE);
+
                                 systhem.setVisibility(VISIBLE);
 //                                swipe = 2;
 
@@ -819,13 +966,14 @@ closeKeyboard();
                                 StateAdapter stateAdapter = new StateAdapter(MainActivity.this, notatkas, colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
                                 stateAdapter.setOnClickToMore(MainActivity.this::onClick);
                                 recyclerViewNotes.setAdapter(stateAdapter);
-                                recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
+//                                recyclerViewNotes.setLayoutManager(new GridLayoutManager(MainActivity.this, 2));
                                 recyclerViewNotes.setVisibility(VISIBLE);
 //                                search.setVisibility(VISIBLE);
-                                elipse.setVisibility(VISIBLE);
+//                                elipse.setVisibility(VISIBLE);
                                 elipse1.setVisibility(VISIBLE);
                                 edtext.setVisibility(VISIBLE);
-searchmove.setVisibility(VISIBLE);
+//searchmove.setVisibility(VISIBLE);
+                                circleMenu1.setVisibility(INVISIBLE);
 
                                 systhem.setVisibility(INVISIBLE);
                                 circleMenu.setVisibility(INVISIBLE);
@@ -869,8 +1017,7 @@ searchmove.setVisibility(VISIBLE);
 
 
 
-        colorStyle(color1,color2,color3,color4,color5, color6 ,color7, color8);
-
+        colorStyle(color1,color2,color3,color4,color5, color6 ,color7, color8, nav_stat);
 
 
 
@@ -881,34 +1028,63 @@ searchmove.setVisibility(VISIBLE);
 
     }
 
+    @Override
+    public void onBackPressed() {
+        dialog2 = new Dialog(MainActivity.this);
+        dialog2.setContentView(R.layout.dialog4);
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        super.onCreateOptionsMenu(menu);
-//        getMenuInflater().inflate(R.menu.mymenu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.r:
-//                Toast.makeText(this, "update clicked", Toast.LENGTH_SHORT).show();
-//                return true;
-//
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//
-//    }
 
-//    @Override
-//    public void onBackPressed() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        }                            dialog2.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
+
+        dialog2.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog2.setCancelable(false); //Optional
+        dialog2.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
+
+        Button Yes = dialog2.findViewById(R.id.yes_btn);
+        Button No = dialog2.findViewById(R.id.no_btn);
+        TextView exit = dialog2.findViewById(R.id.textView_exit);
+
+
+
+        Yes.setTextColor(getResources().getColor(colorText));
+        No.setTextColor(getResources().getColor(colorText));
+        exit.setTextColor(getResources().getColor(colorText));
+
+
+
+        Yes.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishapp();
+
+
+                dialog2.dismiss();
+
+
+            }
+
+
+
+        });
+        No.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog2.dismiss();
+            }
+        });
+        dialog2.show();
+
 //        super.onBackPressed();
+    }
+
+
+//    @Override
+//    public() {
 //
 //    }
-
-
 
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
@@ -918,6 +1094,11 @@ searchmove.setVisibility(VISIBLE);
         }
     }
 //
+
+    public void finishapp() {
+        this.finishAffinity();
+
+    }
     public void changeColor() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setNavigationBarColor(getResources().getColor(R.color.red1));
@@ -928,9 +1109,13 @@ searchmove.setVisibility(VISIBLE);
 
     }
 
+//    public void method1(Activity act){
+//        TextView tv1 = (TextView)act.findViewById(R.id.textView);
+//        tv1.setText("");
+//    }
 
     @SuppressLint("ResourceType")
-    private void colorStyle(int color1, int color2, int color3 , int color4 , int color5, int color6, int color7 , int color8) {
+    private void colorStyle(int color1, int color2, int color3 , int color4 , int color5, int color6, int color7 , int color8, boolean nav_stat) {
 
 
         colorFav = color1;
@@ -944,15 +1129,16 @@ searchmove.setVisibility(VISIBLE);
         bottomNavigation.setBackgroundColor(getResources().getColor(colorDec1));
         background.setBackgroundColor(getResources().getColor(colorBack));
         litback.setBackgroundColor(getResources().getColor(colorBack));
-        plus1.setColorFilter(getResources().getColor(colorBack));
+        plus1.setColorFilter(getResources().getColor(color6));
 //        search.setColorFilter(getResources().getColor(colorBack));
-        searchmove.setColorFilter(getResources().getColor(colorBack));
+        searchmove.setColorFilter(getResources().getColor(colorText));
         systhem.setTextColor(getResources().getColor(colorText));
         edtext.setHintTextColor(getResources().getColor(colorBack));
         edtext.setTextColor(getResources().getColor(colorBack));
         empty.setTextColor(getResources().getColor(colorText));
         empty1.setTextColor(getResources().getColor(colorText));
-        searchmove.setColorFilter(getResources().getColor(colorBack));
+//        back_dialog.setBackgroundColor(getResources().getColor(colorBack));
+
 //        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
 //        }
@@ -972,23 +1158,31 @@ searchmove.setVisibility(VISIBLE);
 
 //dark
 //        getWindow().getDecorView().setSystemUiVisibility(0);
+if(nav_stat == true){
+    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
+}else{
+    getWindow().getDecorView().setSystemUiVisibility(0);
+
+}
 
         plus.setColorFilter(getResources().getColor(colorDec1));
-        elipse.setColorFilter(getResources().getColor(colorDec1));
+//        elipse.setColorFilter(getResources().getColor(colorDec1));
         elipse4.setColorFilter(getResources().getColor(colorDec1));
         elipse1.setColorFilter(getResources().getColor(colorDec1));
 
 
         int[] colorList = null;
+
         if (stateDarkMode) {
-            colorList = new int[]{ContextCompat.getColor(this, colorBack), ContextCompat.getColor(this, color6)};
+            colorList = new int[]{ContextCompat.getColor(this,/*color4*/ colorBack), ContextCompat.getColor(this, color6)};
 //            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
 
         } else {
-            colorList = new int[]{ContextCompat.getColor(this,colorBack), ContextCompat.getColor(this, color6)}; }
+            colorList = new int[]{ContextCompat.getColor(this,/*R.color.dark*/ colorBack), ContextCompat.getColor(this, color6)}; }
         ColorStateList colorStateList = new ColorStateList(bottomNavBarStateList, colorList);
+
         bottomNavigation.setItemIconTintList(colorStateList);
         bottomNavigation.setItemTextColor(colorStateList);
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
@@ -1003,64 +1197,10 @@ searchmove.setVisibility(VISIBLE);
         editor.putInt("COLOR6", color6);
         editor.putInt("COLOR7", color7);
         editor.putInt("COLOR8", color8);
+//        editor.putInt("COLOR_NAV", boolean nav_stat);
 
         editor.apply();
     }
-
-//    @SuppressLint("ResourceType")
-//    private void colorblind(  int color7 , int color8) {
-//
-//
-////        colorFav = color1;
-////        colorTitle = color2;
-////        colorDec = color3;
-////        colorTitle1 = color4;//light
-////        colorDec1 = color5;//dark
-////        colorBottom = color6;//коли не вибрана вкладка
-//        colorBack = color7;
-//        colorText = color8;
-////        bottomNavigation.setBackgroundColor(getResources().getColor(colorDec1));
-//        switch1.setTextColor(getResources().getColor(colorText));
-//        background.setBackgroundColor(getResources().getColor(colorBack));
-//        litback.setBackgroundColor(getResources().getColor(colorBack));
-//        plus1.setColorFilter(getResources().getColor(colorBack));
-//        search.setColorFilter(getResources().getColor(colorBack));
-//        searchmove.setColorFilter(getResources().getColor(colorBack));
-//        systhem.setTextColor(getResources().getColor(colorText));
-//
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//        Window window9 = getWindow();
-//        window9.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//        window9.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window9.setStatusBarColor(getResources().getColor(colorBack));
-//
-////        plus.setColorFilter(getResources().getColor(colorDec1));
-////        elipse.setColorFilter(getResources().getColor(colorDec1));
-////        elipse4.setColorFilter(getResources().getColor(colorDec1));
-////        elipse1.setColorFilter(getResources().getColor(colorDec1));
-//
-//        int[] colorList = null;
-//        if (stateDarkMode) {
-//            colorList = new int[]{ContextCompat.getColor(this, colorBack), ContextCompat.getColor(this, color6)};
-//        } else {
-//            colorList = new int[]{ContextCompat.getColor(this,colorBack), ContextCompat.getColor(this, color6)}; }
-//        ColorStateList colorStateList = new ColorStateList(bottomNavBarStateList, colorList);
-//        bottomNavigation.setItemIconTintList(colorStateList);
-//        bottomNavigation.setItemTextColor(colorStateList);
-//
-//
-//        SharedPreferences.Editor editor = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
-////        editor.putInt("COLOR1", color1);
-////        editor.putInt("COLOR2", color2);
-////        editor.putInt("COLOR3", color3);
-////        editor.putInt("COLOR4", color4);
-////        editor.putInt("COLOR5", color5);
-////        editor.putInt("COLOR6", color6);
-//        editor.putInt("COLOR7", color7);
-//        editor.putInt("COLOR8", color8);
-//
-//        editor.apply();
-//    }
 
 
     private int[][] bottomNavBarStateList = new int[][]{{android.R.attr.state_checked}, {-android.R.attr.state_checked}};
@@ -1094,41 +1234,10 @@ searchmove.setVisibility(VISIBLE);
                 MediaPlayer ring= MediaPlayer.create(MainActivity.this,R.raw.pop);
                 ring.start();
 
+//                recyclerViewNotes.setLayoutManager(new GridLayoutManager(this, 1));
 
                 break;
 
-//            case R.id.item1:
-//                colorStyle(R.drawable.favorite_greenblue,R.drawable.elipse2_greenblue,R.drawable.elipse3_greenblue, R.color.greenblue2,R.color.greenblue1, R.color.greenblue3);
-//
-//                break;
-//
-//
-//            case R.id.item2:
-//                colorStyle(R.drawable.favorite_orange,R.drawable.elipse2_orange,R.drawable.elipse3_orange, R.color.orange2,R.color.orange1, R.color.orange3);// Метод
-//
-//
-//                break;
-//
-//            case R.id.item3:
-//                colorStyle(R.drawable.favorite_purple,R.drawable.elipse2_purple,R.drawable.elipse3_purple,R.color.purple2, R.color.purple1, R.color.purple3);
-//
-//                break;
-//
-//            case R.id.item4:
-//                colorStyle(R.drawable.favorite_green,R.drawable.elipse2_green,R.drawable.elipse3_green,R.color.green2, R.color.green1, R.color.green3);
-//
-//
-//                break;
-//
-//            case R.id.item5:
-//                colorStyle(R.drawable.favorite_blue,R.drawable.elipse2_blue,R.drawable.elipse3_blue,R.color.blue2, R.color.blue1, R.color.blue3);
-//
-//                break;
-//
-//            case R.id.item6:
-//                colorStyle(R.drawable.favorite_red,R.drawable.elipse2_red,R.drawable.elipse3_red,R.color.red2, R.color.red1, R.color.red3);
-//
-//                break;
         }
 
         if (anim != null) {
@@ -1152,11 +1261,22 @@ searchmove.setVisibility(VISIBLE);
 
 //        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
 //        dialog.getWindow().setBackgroundDrawableResource(getResources().getColor(colorBack));
-    dialog.setCancelable(false); //Optional
+    dialog.setCancelable(true); //Optional
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
-        Button Delete = dialog.findViewById(R.id.delete);
+        Button Delete = dialog.findViewById(R.id.delete_btn);
         Button Edit = dialog.findViewById(R.id.edit);
         Button Cancel = dialog.findViewById(R.id.cancel);
+        TextView Back = dialog.findViewById(R.id.back_dialog);
+
+        ImageView Edit_img = dialog.findViewById(R.id.edit_dialog1);
+        ImageView Delete_img = dialog.findViewById(R.id.delete_dialog1);
+        Edit_img.setColorFilter(getResources().getColor(colorText));
+        Delete_img.setColorFilter(getResources().getColor(colorText));
+
+        Back.setBackgroundColor(getResources().getColor(colorBack));
+        Delete.setTextColor(getResources().getColor(colorText));
+        Edit.setTextColor(getResources().getColor(colorText));
+        Cancel.setTextColor(getResources().getColor(colorText));
 
 
         Delete.setOnClickListener(new View.OnClickListener() {
@@ -1168,19 +1288,29 @@ searchmove.setVisibility(VISIBLE);
 
                     dialog1 = new Dialog(MainActivity.this);
                     dialog1.setContentView(R.layout.dialog3);
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         dialog1.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
 
                     }
+
                     dialog1.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     dialog1.setCancelable(false); //Optional
                     dialog1.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
 
-                    dialog1.show();
 
                     Button Yes = dialog1.findViewById(R.id.yes);
                     Button No = dialog1.findViewById(R.id.no);
+                    TextView Ask = dialog1.findViewById(R.id.ask);
+                    TextView Back1 = dialog1.findViewById(R.id.back_dialog1);
 
+
+                    Back1.setBackgroundColor(getResources().getColor(colorBack));
+                    Yes.setTextColor(getResources().getColor(colorText));
+                    No.setTextColor(getResources().getColor(colorText));
+
+
+                    Ask.setTextColor(getResources().getColor(colorText));
                     Yes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -1215,7 +1345,8 @@ searchmove.setVisibility(VISIBLE);
 
                             dialog1.dismiss();
                         }
-                    });
+
+                    });dialog1.show();
 
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);

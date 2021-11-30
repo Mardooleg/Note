@@ -67,10 +67,11 @@ android:id="@+id/back"
      android:background="@null"
      android:hint="Title"
      android:paddingTop="10dp"
-     android:textColorHint="@color/greenblue1"
+     android:textColorHint="@color/dark"
      android:textSize="20sp"
      android:textStyle="bold"
-     android:textColor="#828282"
+     android:textColor="@color/dark"
+     android:maxLength="30"
      ></EditText>
 
  <EditText
@@ -79,11 +80,10 @@ android:id="@+id/back"
      android:layout_height="wrap_content"
      android:layout_alignParentStart="true"
      android:layout_alignParentTop="true"
-
      android:layout_alignParentEnd="true"
      android:layout_alignParentBottom="true"
      android:layout_marginStart="30dp"
-     android:textColor="@color/greenblue1"
+     android:textColor="@color/dark"
      android:layout_marginLeft="30dp"
      android:layout_marginTop="100dp"
      android:layout_marginEnd="30dp"
@@ -91,7 +91,7 @@ android:id="@+id/back"
      android:background="@null"
      android:gravity="top"
      android:hint="Type here..."
-     android:textColorHint="@color/greenblue1"
+     android:textColorHint="@color/dark"
      android:textSize="20sp"></EditText>
 
 </RelativeLayout>
