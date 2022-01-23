@@ -24,6 +24,7 @@ public class StateAdapter1 extends RecyclerView.Adapter<StateAdapter1.ViewHolder
     private StateAdapter.OnClickToMore onClickToMore;
     private Context context;
 
+    int colorBack = R.drawable.elipse3;
     int colorFav = R.drawable.favorite;
     int colorTitle = R.drawable.elipse2;
     int colorDec = R.drawable.elipse3;
@@ -39,11 +40,12 @@ public class StateAdapter1 extends RecyclerView.Adapter<StateAdapter1.ViewHolder
         this.onClickToMore = onClickToMore;
     }
 
-    StateAdapter1(Context context, List<Notatka> notatkas,  int colorFav, int colorTitle, int colorDec, int colorTitle1, int colorDec1, int colorBottom) {
+    StateAdapter1(Context context, List<Notatka> notatkas,  int colorFav, int colorTitle, int colorDec, int colorTitle1, int colorDec1, int colorBottom, int colorBack, int colorText) {
         this.context = context;
         this.notatkas = notatkas;
         this.inflater = LayoutInflater.from(context);
 
+        this.colorBack = colorBack;
         this.colorFav = colorFav;
         this.colorTitle = colorTitle;
         this.colorDec = colorDec;
@@ -73,6 +75,9 @@ public class StateAdapter1 extends RecyclerView.Adapter<StateAdapter1.ViewHolder
         holder.firsttitle.setBackground(ContextCompat.getDrawable(holder.firstnote.getContext(), colorTitle));
         holder.firstnote.setText(notatka.getNote());
         holder.firstnote.setBackground(ContextCompat.getDrawable(holder.firstnote.getContext(), colorDec));
+
+        holder.firsttitle.setTextColor(ContextCompat.getColor(holder.firsttitle.getContext(), colorBack));
+        holder.firstnote.setTextColor(ContextCompat.getColor(holder.firstnote.getContext(), colorBack));
 
         holder.firstnote.setOnClickListener(new DoubleClickListener() {
                                                 @Override

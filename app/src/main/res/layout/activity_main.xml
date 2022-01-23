@@ -261,8 +261,6 @@
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="82dp"
             android:src="@drawable/ic_plus"
-            android:shadowColor="@color/black"
-
             ></ImageView>
         <ImageView
             android:id="@+id/plus1"

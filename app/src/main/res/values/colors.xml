@@ -7,6 +7,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="colorblind_1">#a0a0a0</color>
     <color name="white">#FFFFFFFF</color>
     <color name="greenblue1">#00C3A0</color>
     <color name="greenblue2">#8BDDBA</color>
@@ -20,12 +21,12 @@
     <color name="orange2">#FEAE64</color>
     <color name="blue1">#1642D1</color>
     <color name="blue2">#4469E1</color>
-    <color name="color_blind2">#cccccc</color>
-    <color name="color_dark2">#787878</color>
+    <color name="color_blind2">#808080</color>
+    <color name="color_dark2">#666666</color>
 
     <color name="green1">#00BA4D</color>
     <color name="green2">#89EB8D</color>
-    <color name="dark">#1B2327</color>
+    <color name="dark">#121212</color>
     <color name="dialog_window">#263238</color>
 
     <color name="password">#222222</color>
@@ -35,7 +36,7 @@
     <color name="orange3">#C25C00</color>
     <color name="purple3">#860096</color>
     <color name="green3">#00A435</color>
-    <color name="color_blind3">#9b9b9b    </color>
+    <color name="color_blind3">#666666    </color>
     <color name="yellow3">#B8A600</color>
     <color name="color_dark3">#989b9b </color>
 

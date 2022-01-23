@@ -50,5 +50,6 @@ dependencies {
     implementation 'com.github.Hitomis:CircleMenu:v1.1.0'
     implementation 'com.ramotion.circlemenu:circle-menu:0.3.2'
 
+
 }
 

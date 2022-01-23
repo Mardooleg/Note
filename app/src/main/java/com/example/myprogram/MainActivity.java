@@ -326,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Okay.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.white, R.color.color_blind2, R.color.color_blind3, R.color.white, R.color.dark, true);
+                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.colorblind_1, R.color.color_blind2, R.color.color_blind3, R.color.white, R.color.dark, true);
 
 
                                 dialog.dismiss();
@@ -337,8 +337,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                         Cancel.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.white, R.color.color_blind2, R.color.color_blind3, R.color.dark, R.color.white, false);
-                                getWindow().getDecorView().setSystemUiVisibility(0);
+                                colorStyle(R.drawable.favorite_colorblind, R.drawable.elipse2_colorblind, R.drawable.elipse3_colorblind, R.color.colorblind_1, R.color.color_blind2, R.color.color_blind3, R.color.dark, R.color.white, false);
+//                                getWindow().getDecorView().setSystemUiVisibility(0);
 //                                        statusbar = 0;
 
                                 dialog.dismiss();
@@ -671,7 +671,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         List<Notatka> notatkas1 = App.getInstance().getAppDatabase().modelDao().getAllFavorite("");
         Collections.reverse(notatkas1);
-        StateAdapter1 stateAdapter1 = new StateAdapter1(this, notatkas, color1, color2, color3, color4,  color5, color6);
+        StateAdapter1 stateAdapter1 = new StateAdapter1(this, notatkas, color1, color2, color3, color4,  color5, color6, color7, color8);
         stateAdapter1.setOnClickToMore(this);
         recyclerViewNotes = findViewById(R.id.rv);
         recyclerViewNotes.setAdapter(stateAdapter);
@@ -800,7 +800,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 } else if (recyclerViewFavorite.getVisibility() == VISIBLE) {
                     List<Notatka> notatkas = App.getInstance().getAppDatabase().modelDao().getAllFavorite(edtext.getText().toString());
                     Collections.reverse(notatkas);
-                    StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas,  colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
+                    StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas,  colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
                     stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
                     recyclerViewFavorite.setAdapter(stateAdapter1);
 
@@ -891,7 +891,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 recyclerViewNotes.setVisibility(GONE);
                                 List<Notatka> notatkas1 = App.getInstance().getAppDatabase().modelDao().getAllFavorite(edtext.getText().toString());
                                 Collections.reverse(notatkas1);
-                                StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas1 , colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom);
+                                StateAdapter1 stateAdapter1 = new StateAdapter1(MainActivity.this, notatkas1 , colorFav, colorTitle, colorDec, colorTitle1,  colorDec1, colorBottom, colorBack, colorText);
                                 stateAdapter1.setOnClickToMore(MainActivity.this::onClick);
                                 edtext.setVisibility(VISIBLE);
 //                                switch1.setVisibility(INVISIBLE);
@@ -1265,18 +1265,23 @@ if(nav_stat == true){
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
         Button Delete = dialog.findViewById(R.id.delete_btn);
         Button Edit = dialog.findViewById(R.id.edit);
-        Button Cancel = dialog.findViewById(R.id.cancel);
+//        Button Cancel = dialog.findViewById(R.id.cancel);
         TextView Back = dialog.findViewById(R.id.back_dialog);
+        TextView Ask = dialog.findViewById(R.id.askwhattodo);
 
         ImageView Edit_img = dialog.findViewById(R.id.edit_dialog1);
         ImageView Delete_img = dialog.findViewById(R.id.delete_dialog1);
+        Edit_img.setColorFilter(getResources().getColor(colorBack));
+        Delete_img.setColorFilter(getResources().getColor(colorBack));
+
         Edit_img.setColorFilter(getResources().getColor(colorText));
         Delete_img.setColorFilter(getResources().getColor(colorText));
 
         Back.setBackgroundColor(getResources().getColor(colorBack));
         Delete.setTextColor(getResources().getColor(colorText));
+        Ask.setTextColor(getResources().getColor(colorText));
         Edit.setTextColor(getResources().getColor(colorText));
-        Cancel.setTextColor(getResources().getColor(colorText));
+//        Cancel.setTextColor(getResources().getColor(colorText));
 
 
         Delete.setOnClickListener(new View.OnClickListener() {
@@ -1314,7 +1319,7 @@ if(nav_stat == true){
                     Yes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "You delete this note", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(getApplicationContext(), "Deleted", Toast.LENGTH_SHORT);
                             toast.show();
                             App.getInstance().getAppDatabase().modelDao().delete(notatka);
 
@@ -1375,13 +1380,13 @@ if(nav_stat == true){
                 }
             }
         });
-        Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-
-            }
-        });
+//        Cancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//
+//            }
+//        });
         Edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
