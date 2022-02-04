@@ -3,6 +3,7 @@ package com.example.myprogram;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -14,15 +15,33 @@ public class Notatka implements Parcelable {
     private int id;
     private String title;
     private String note;
-    private boolean passcode;
+    private boolean passcode ;
     private boolean favorite;
 
-    public Notatka(String title, String note, boolean passcode, boolean favorite){
+
+
+
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//
+//        Note note = (Note) o;
+//
+//        if (id != note.id) return false;
+//        if (timestamp != note.timestamp) return false;
+//        if (done != note.done) return false;
+//        return text != null ? text.equals(note.text) : note.text == null;
+//    }
+
+    public Notatka(String title, String note, boolean passcode, boolean favorite  ){
 
         this.title=title;
         this.note=note;
         this.passcode=passcode;
         this.favorite=favorite;
+
 
     }
 
@@ -31,10 +50,10 @@ public class Notatka implements Parcelable {
         id = in.readInt();
         title = in.readString();
         note = in.readString();
+
         passcode = in.readByte() != 0;
         favorite = in.readByte() != 0;
     }
-
 
 
     @Override
@@ -102,4 +121,6 @@ public class Notatka implements Parcelable {
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
     }
+
+
 }

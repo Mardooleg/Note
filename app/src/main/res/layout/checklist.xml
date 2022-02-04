@@ -31,18 +31,30 @@ android:id="@+id/backgroun1"
         android:layout_marginLeft="15dp"
 android:id="@+id/back"
         android:src="@drawable/back"></ImageView>
-    <ImageView
-        android:id="@+id/checklist"
-        android:layout_width="25dp"
 
-        android:layout_height="25dp"
-        android:layout_alignParentTop="true"
+    <!--    <ImageView-->
+<!--        android:id="@+id/checklist"-->
+<!--        android:layout_width="25dp"-->
+
+<!--        android:layout_height="25dp"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:layout_marginEnd="105dp"-->
+<!--        android:src="@drawable/ic__1863769461536572528"></ImageView>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/checklist"
+        android:layout_width="335dp"
+        android:layout_height="596dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="105dp"
-        android:visibility="invisible"
-        android:src="@drawable/ic__1863769461536572528"></ImageView>
- <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="50dp"
+        android:visibility="visible" />
+
+    <ImageView
      android:id="@+id/delete"
      android:layout_width="25dp"
 
@@ -83,25 +95,5 @@ android:id="@+id/back"
      android:textColor="@color/dark"
      android:maxLength="30"
      ></EditText>
-
- <EditText
-     android:id="@+id/note"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:layout_alignParentStart="true"
-     android:layout_alignParentTop="true"
-     android:layout_alignParentEnd="true"
-     android:layout_alignParentBottom="true"
-     android:layout_marginStart="30dp"
-     android:textColor="@color/dark"
-     android:layout_marginLeft="30dp"
-     android:layout_marginTop="100dp"
-     android:layout_marginEnd="30dp"
-     android:layout_marginBottom="30dp"
-     android:background="@null"
-     android:gravity="top"
-     android:hint="Type here..."
-     android:textColorHint="@color/dark"
-     android:textSize="20sp"></EditText>
 
 </RelativeLayout>

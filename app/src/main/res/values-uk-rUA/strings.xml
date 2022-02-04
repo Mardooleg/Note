@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"><i>.noti</i></string>
+    <string name="red">Червоний</string>
+    <string name="search">Шукати</string>
+    <string name="favorite">Улюблене</string>
+    <string name="home">Головна</string>
+    <string name="settings">Настройки</string>
+    <string name="systemtheme">Системна темa</string>
+    <string name="title">Заговолок</string>
+    <string name="text">Писати тут...</string>
+    <string name="edit">Редагувати</string>
+    <string name="delete">Видалити</string>
+    <string name="ask2">Видалити улюблену нотатку?</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="ask3">Виберіть основну тему</string>
+    <string name="dark">Темна</string>
+    <string name="light">Світла</string>
+    <string name="languages">Мови</string>
+    <string name="ask1">вап</string>
+</resources>

@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name"><i>.noti</i></string>
     <string name="red">Red</string>
-
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="home">Home</string>
@@ -19,5 +19,6 @@
     <string name="dark">Dark</string>
     <string name="light">Light</string>
     <string name="languages">Languages</string>
+
 
 </resources>

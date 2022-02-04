@@ -1,59 +1,45 @@
 package com.example.myprogram;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Delete;
-import androidx.viewpager.widget.ViewPager;
-
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.shapes.Shape;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Layout;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.style.BackgroundColorSpan;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hitomi.cmlibrary.CircleMenu;
@@ -62,15 +48,17 @@ import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-import static android.view.View.*;
+import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
+import static android.view.View.OnClickListener;
 import static android.view.View.VISIBLE;
 import static android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener, StateAdapter.OnClickToMore, StateAdapter1.OnClickToMore{
     boolean stateDarkMode = false;
-        private AppCompatEditText acetStatus;
+    private AppCompatEditText acetStatus;
     private ListPopupWindow statusPopupList;
     private Dialog dialog, dialog2;
     private Dialog dialog1;
@@ -98,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     TextView note;
     CircleMenu circleMenu;
     CircleMenu circleMenu1;
+    CircleMenu circleMenu_lan;
 
 //    TextView back_dialog;
 
@@ -117,9 +106,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //    ImageView item6;
 //    ImageView elipse;
     ImageView elipse1;
-//
+    //
     EditText edtext;
-//    EditText acetStatus;
+    //    EditText acetStatus;
     Button delete_btn;
 
 
@@ -134,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     int colorBottom = R.color.greenblue3;
     int colorBack = R.color.white;
     int colorText = R.color.black;
-     boolean grid;
+    boolean grid;
 
 //    int dialog2 = R.drawable.custom_dialog_background;
 
@@ -167,7 +156,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        loadLocale();
+
         setContentView(R.layout.activity_main);
+
+
+//        ActionBar actionbar = getSupportActionBar();
+//        actionbar.setTitle(getResources().getString(R.string.app_name));
+
+
+
+
+
+
+
+
 
 //        getWindow().setStatusBarColor(ContextCompat.getColor(MainActivity.this,R.color.dark));
 
@@ -203,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         int color7 = prefs.getInt("COLOR7", R.color.white); //0 is the default value.
         int color8 = prefs.getInt("COLOR8", R.color.black); //0 is the default value.
         boolean nav_stat = false;
-        
+
         int black_color= prefs.getInt("COLOR9", R.color.black);
         int white_color= prefs.getInt("COLOR10", R.color.white);
 
@@ -224,6 +227,41 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             getWindow().getDecorView().setSystemUiVisibility(0);
 
         }
+        circleMenu_lan= (CircleMenu) findViewById(R.id.circle_menu_lan);
+        circleMenu_lan.setMainMenu(Color.parseColor("#ababab"), R.drawable.ic__763404491553666161, R.drawable.ic__2462973021557749687);
+        circleMenu_lan.addSubMenu(Color.parseColor("#0000ff"), (Bitmap) null);
+        circleMenu_lan.addSubMenu(Color.parseColor("#ff0000"), (Bitmap) null);
+        circleMenu_lan.addSubMenu(Color.parseColor("#ff0000"), (Bitmap) null);
+
+
+        circleMenu_lan.setOnMenuSelectedListener(new OnMenuSelectedListener() {
+                                                     @Override
+                                                     public void onMenuSelected(int index) {
+                                                         switch (index) {
+                                                             case 0:
+                                                                 viewPager.setCurrentItem(1);
+
+                                                                 setLocale("uk");
+                                                                    recreate();
+break;
+                                                             case 1:
+                                                                 viewPager.setCurrentItem(1);
+
+                                                                 setLocale("en");
+                                                                 recreate();
+                                                              break;
+                                                             case 2:
+                                                                 viewPager.setCurrentItem(1);
+
+                                                                 setLocale("es");
+                                                                 recreate();
+                                                                 break;
+
+
+                                                         }
+
+                                                     }
+                                                 });
 
 //
 // circleMenu1 = (CircleMenu) findViewById(R.id.circle_menu1);
@@ -689,7 +727,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                     case 0:
 //                        recyclerViewNotes.setLayoutManager(new GridLayoutManager(null , 2));
 
-                   break;
+                        break;
                     case 1:
 //                        recyclerViewNotes.setLayoutManager(new GridLayoutManager(null , 1));
 //                        grid = false;
@@ -909,6 +947,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //                                item6.setVisibility(INVISIBLE);
                                 systhem.setVisibility(INVISIBLE);
                                 circleMenu.setVisibility(INVISIBLE);
+                                circleMenu_lan.setVisibility(INVISIBLE);
+
                                 recyclerViewFavorite.setVisibility(VISIBLE);
 //                                swipe = 0;
 
@@ -922,7 +962,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                                 }
 
                                 viewPager.setCurrentItem(0);
-closeKeyboard();
+                                closeKeyboard();
                                 break;
                             case R.id.settings:
                                 empty1.setVisibility(GONE);
@@ -944,7 +984,7 @@ closeKeyboard();
                                 empty.setVisibility(GONE);
 
                                 circleMenu.setVisibility(VISIBLE);
-                                circleMenu.setVisibility(VISIBLE);
+                                circleMenu_lan.setVisibility(VISIBLE);
 //                                circleMenu1.setVisibility(VISIBLE);
 
                                 systhem.setVisibility(VISIBLE);
@@ -956,6 +996,7 @@ closeKeyboard();
 
                                 break;
                             case R.id.home:
+
                                 empty1.setVisibility(GONE);
                                 astonaut1.setVisibility(GONE);
                                 plus1.setVisibility(VISIBLE);
@@ -974,6 +1015,7 @@ closeKeyboard();
                                 edtext.setVisibility(VISIBLE);
 //searchmove.setVisibility(VISIBLE);
                                 circleMenu1.setVisibility(INVISIBLE);
+                                circleMenu_lan.setVisibility(INVISIBLE);
 
                                 systhem.setVisibility(INVISIBLE);
                                 circleMenu.setVisibility(INVISIBLE);
@@ -1094,7 +1136,21 @@ closeKeyboard();
         }
     }
 //
-
+private void setLocale(String lang) {
+Locale locale = new Locale (lang);
+Locale.setDefault(locale);
+    Configuration config = new Configuration();
+    config.locale = locale;
+    getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+SharedPreferences.Editor editor_lan = getSharedPreferences("SETTING", MODE_PRIVATE).edit();
+editor_lan.putString("MYLANG", lang);
+editor_lan.apply();
+    }
+    public void loadLocale(){
+        SharedPreferences prefs_lan = getSharedPreferences("SETTING", Activity.MODE_PRIVATE);
+        String language = prefs_lan.getString("MYLANG", "");
+        setLocale(language);
+    }
     public void finishapp() {
         this.finishAffinity();
 
@@ -1158,13 +1214,13 @@ closeKeyboard();
 
 //dark
 //        getWindow().getDecorView().setSystemUiVisibility(0);
-if(nav_stat == true){
-    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        if(nav_stat == true){
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-}else{
-    getWindow().getDecorView().setSystemUiVisibility(0);
+        }else{
+            getWindow().getDecorView().setSystemUiVisibility(0);
 
-}
+        }
 
         plus.setColorFilter(getResources().getColor(colorDec1));
 //        elipse.setColorFilter(getResources().getColor(colorDec1));
@@ -1261,7 +1317,7 @@ if(nav_stat == true){
 
 //        dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.custom_dialog_background));
 //        dialog.getWindow().setBackgroundDrawableResource(getResources().getColor(colorBack));
-    dialog.setCancelable(true); //Optional
+        dialog.setCancelable(true); //Optional
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
         Button Delete = dialog.findViewById(R.id.delete_btn);
         Button Edit = dialog.findViewById(R.id.edit);

@@ -14,6 +14,8 @@
         android:id="@+id/background1"
         ></TextView>
 
+
+
     <!--    <androidx.appcompat.widget.Toolbar-->
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="?attr/actionBarDivider"-->
@@ -178,7 +180,7 @@
             android:layout_toRightOf="@+id/searchmove"
             android:background="@null"
             android:fontFamily="@font/montserrat"
-            android:hint="Search                             "
+            android:hint="@string/search"
             android:inputType="text"
             android:paddingLeft="8dp"
             android:paddingTop="12dp"
@@ -299,7 +301,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
-            android:text="System theme"
+            android:text="@string/systemtheme"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold"
@@ -403,6 +405,19 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="-10dp"
+            android:layout_marginEnd="-45dp"
+            android:paddingTop="10dp"
+            android:visibility="invisible"
+
+
+            />
+        <com.hitomi.cmlibrary.CircleMenu
+            android:id="@+id/circle_menu_lan"
+            android:layout_width="240dp"
+            android:layout_height="170dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="160dp"
             android:layout_marginEnd="-45dp"
             android:paddingTop="10dp"
             android:visibility="invisible"

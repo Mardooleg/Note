@@ -15,7 +15,7 @@ public class App extends Application {
                 .build();
 
         // TODO: 02.03.2021  
-        //appDatabase.modelDao().save(new Notatka("Yura", "Yura1", false));
+//        appDatabase.modelDao().save(new Notatka("Yura", "Yura1", false,false));
         super.onCreate();
     }
     public static App getInstance(){

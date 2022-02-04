@@ -19,7 +19,7 @@ public interface ModelDao{
     @Query("SELECT* FROM Notatka WHERE favorite = 1 AND (title LIKE '%' || :name || '%' OR note LIKE '%' || :name || '%')")
     List<Notatka> getAllFavorite( String name);
 
-    @Query("SELECT* FROM Notatka WHERE passcode = 1 AND (title LIKE '%' || :name || '%' OR note LIKE '%' || :name || '%' OR favorite LIKE '%' || :name || '%')")
+    @Query("SELECT* FROM Notatka WHERE passcode = 1 AND (title LIKE '%' || :name || '%' OR note LIKE '%' || :name || '%' )")
     List<Notatka> getAllPasscode( String name);
 
     @Query("SELECT * FROM Notatka WHERE passcode LIKE '%' || :name || '%'")

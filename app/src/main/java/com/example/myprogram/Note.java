@@ -39,6 +39,7 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
     EditText note;
     ImageView tick;
     ImageView delete;
+
     Notatka notatka;
     TextView background2;
 
@@ -78,6 +79,10 @@ public class Note extends AppCompatActivity implements View.OnClickListener {
         delete = findViewById(R.id.delete);
         ImageView delete = findViewById(R.id.delete);
         delete.setOnClickListener(this);
+
+//        check = findViewById(R.id.checklist);
+//        ImageView check = findViewById(R.id.checklist);
+//        check.setOnClickListener(this);
 
         notatka = getIntent().getParcelableExtra("STRING_NOTE");
 

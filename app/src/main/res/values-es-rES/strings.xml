@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"><i>.noti</i></string>
+    <string name="red">Red</string>
+    <string name="search">Búsqueda</string>
+    <string name="favorite">Favorito</string>
+    <string name="home">Casa</string>
+    <string name="settings">Ajustes</string>
+    <string name="systemtheme">del theme</string>
+    <string name="title">Título</string>
+    <string name="text">Escriba aquí...</string>
+    <string name="ask1">вап</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Borrar</string>
+    <string name="ask2">¿Eliminar tu nota favorita?</string>
+    <string name="yes">sí</string>
+    <string name="no">No</string>
+    <string name="ask3">Elige el tema principal:</string>
+    <string name="dark">Oscuro</string>
+    <string name="light">Ligero</string>
+    <string name="languages">Idiomas</string>
+
+    Búsqueda
+    Favorito
+    Casa
+    Ajustes
+    tema del sistema
+    Título
+    Escriba aquí...
+    вап
+    Editar
+    Borrar
+    ¿Eliminar tu nota favorita?
+    sí
+    No
+    Elige el tema principal:
+    Oscuro
+    Ligero
+    Idiomas
+</resources>
