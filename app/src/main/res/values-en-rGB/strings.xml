@@ -9,7 +9,7 @@
     <string name="systemtheme">System theme</string>
     <string name="title">Title</string>
     <string name="text">Type here...</string>
-    <string name="ask1">вап</string>
+    <string name="ask1">Select an action for this note</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="ask2">Delete your favorite note?</string>

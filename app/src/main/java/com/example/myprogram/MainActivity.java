@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     TextView empty1;
     TextView background;
     TextView litback;
+    TextView language;
     TextView textNote;
     TextView textTitle;
 
@@ -229,33 +230,57 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         }
         circleMenu_lan= (CircleMenu) findViewById(R.id.circle_menu_lan);
         circleMenu_lan.setMainMenu(Color.parseColor("#ababab"), R.drawable.ic__763404491553666161, R.drawable.ic__2462973021557749687);
-        circleMenu_lan.addSubMenu(Color.parseColor("#0000ff"), (Bitmap) null);
+        circleMenu_lan.addSubMenu(0 ,R.drawable.ic_ua);
+        circleMenu_lan.addSubMenu(Color.parseColor("#ff0000"), (Bitmap) null);
+        circleMenu_lan.addSubMenu(Color.parseColor("#ff0000"), (Bitmap) null);
         circleMenu_lan.addSubMenu(Color.parseColor("#ff0000"), (Bitmap) null);
         circleMenu_lan.addSubMenu(Color.parseColor("#ff0000"), (Bitmap) null);
 
 
         circleMenu_lan.setOnMenuSelectedListener(new OnMenuSelectedListener() {
-                                                     @Override
-                                                     public void onMenuSelected(int index) {
-                                                         switch (index) {
-                                                             case 0:
-                                                                 viewPager.setCurrentItem(1);
+         @Override
+         public void onMenuSelected(int index) {
+             switch (index) {
+                 case 0:
 
-                                                                 setLocale("uk");
-                                                                    recreate();
+                     setLocale("uk");
+                        recreate();
+                     Menu menu = bottomNavigation.getMenu();
+                     MenuItem menuItem = menu.getItem(1);
+                     menuItem.setChecked(true);
 break;
-                                                             case 1:
-                                                                 viewPager.setCurrentItem(1);
+                 case 1:
 
-                                                                 setLocale("en");
-                                                                 recreate();
-                                                              break;
-                                                             case 2:
-                                                                 viewPager.setCurrentItem(1);
+                     setLocale("en");
+                     recreate();
+                     Menu menu1 = bottomNavigation.getMenu();
+                     MenuItem menuItem1 = menu1.getItem(1);
+                     menuItem1.setChecked(true);
+                  break;
+                 case 2:
 
-                                                                 setLocale("es");
-                                                                 recreate();
-                                                                 break;
+                     setLocale("es");
+                     recreate();
+                     Menu menu2 = bottomNavigation.getMenu();
+                     MenuItem menuItem2 = menu2.getItem(1);
+                     menuItem2.setChecked(true);
+                     break;
+                 case 3:
+
+                     setLocale("zh");
+                     recreate();
+                     Menu menu3 = bottomNavigation.getMenu();
+                     MenuItem menuItem3 = menu3.getItem(1);
+                     menuItem3.setChecked(true);
+                     break;
+                 case 4:
+
+                     setLocale("pl");
+                     recreate();
+                     Menu menu4 = bottomNavigation.getMenu();
+                     MenuItem menuItem4 = menu4.getItem(1);
+                     menuItem4.setChecked(true);
+                     break;
 
 
                                                          }
@@ -401,6 +426,7 @@ break;
                         TextView textView3 = dialog.findViewById(R.id.textView2);
 
                         TextView Back1 = dialog.findViewById(R.id.back);
+
 
                         Back1.setBackgroundColor(getResources().getColor(colorBack));
                         Okay1.setTextColor(getResources().getColor(colorText));
@@ -763,7 +789,7 @@ break;
         title = findViewById(R.id.firsttitle);
         note = findViewById(R.id.firstnote);
         plus = findViewById(R.id.plus);
-
+        language = findViewById(R.id.language);
         delete_btn = findViewById(R.id.delete_btn);
 //back_dialog = findViewById(R.id.back_dialog);
 
@@ -948,6 +974,7 @@ break;
                                 systhem.setVisibility(INVISIBLE);
                                 circleMenu.setVisibility(INVISIBLE);
                                 circleMenu_lan.setVisibility(INVISIBLE);
+                                language.setVisibility(INVISIBLE);
 
                                 recyclerViewFavorite.setVisibility(VISIBLE);
 //                                swipe = 0;
@@ -965,6 +992,8 @@ break;
                                 closeKeyboard();
                                 break;
                             case R.id.settings:
+                                language.setVisibility(VISIBLE);
+
                                 empty1.setVisibility(GONE);
                                 astonaut1.setVisibility(GONE);
                                 plus1.setVisibility(GONE);
@@ -992,7 +1021,6 @@ break;
 
                                 viewPager.setCurrentItem(2);
                                 closeKeyboard();
-                                closeKeyboard();
 
                                 break;
                             case R.id.home:
@@ -1018,6 +1046,8 @@ break;
                                 circleMenu_lan.setVisibility(INVISIBLE);
 
                                 systhem.setVisibility(INVISIBLE);
+                                language.setVisibility(INVISIBLE);
+
                                 circleMenu.setVisibility(INVISIBLE);
 //                                acet_status.setVisibility(INVISIBLE);
 //                                item1.setVisibility(INVISIBLE);

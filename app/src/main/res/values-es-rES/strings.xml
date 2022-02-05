@@ -9,7 +9,7 @@
     <string name="systemtheme">del theme</string>
     <string name="title">Título</string>
     <string name="text">Escriba aquí...</string>
-    <string name="ask1">вап</string>
+    <string name="ask1">Seleccione una acción para esta nota</string>
     <string name="edit">Editar</string>
     <string name="delete">Borrar</string>
     <string name="ask2">¿Eliminar tu nota favorita?</string>

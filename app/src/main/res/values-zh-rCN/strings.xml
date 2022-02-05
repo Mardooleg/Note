@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"><i>.noti</i></string>
+
+    <string name="search">搜索</string>
+    <string name="favorite">最喜欢的</string>
+    <string name="home">家</string>
+    <string name="settings">设置</string>
+    <string name="systemtheme">标题</string>
+    <string name="title">Title</string>
+    <string name="text">在此输入...</string>
+    <string name="ask1">选择此笔记的操作</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="ask2">删除您最喜欢的笔记？</string>
+    <string name="yes">是的</string>
+    <string name="no">不</string>
+    <string name="ask3">选择主题：</string>
+    <string name="dark">黑暗的</string>
+    <string name="light">光</string>
+    <string name="languages">语言</string>
+    <string name="red">red</string>
+
+</resources>

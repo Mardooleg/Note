@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name"><i>.noti</i></string>
+    <string name="search">Szukaj</string>
+    <string name="favorite">Ulubiony</string>
+    <string name="home">Dom</string>
+    <string name="settings">Ustawienia</string>
+    <string name="systemtheme">Motyw systemu</string>
+    <string name="title">Tytuł</string>
+    <string name="text">Pisz tutaj...</string>
+    <string name="edit">Edytować</string>
+    <string name="delete">Kasować</string>
+    <string name="ask2">Usunąć ulubioną notatkę?</string>
+    <string name="yes">tak</string>
+    <string name="no">Nie</string>
+    <string name="ask3">Wybierz główny motyw:</string>
+    <string name="dark">Ciemny</string>
+    <string name="light">Światło</string>
+    <string name="languages">Języki</string>
+    <string name="ask1">Wybierz akcję dla tej notatki</string>
+    <string name="red">Red</string>
+
+</resources>
